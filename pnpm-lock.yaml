@@ -226,6 +226,28 @@ importers:
         specifier: ^5.0.0
         version: 5.9.3
 
+  packages/engine:
+    dependencies:
+      '@chessome/events':
+        specifier: workspace:*
+        version: link:../events
+      '@chessome/shared':
+        specifier: workspace:*
+        version: link:../shared
+    devDependencies:
+      '@chessome/config':
+        specifier: workspace:*
+        version: link:../config
+      '@types/node':
+        specifier: ^20.0.0
+        version: 20.19.43
+      eslint:
+        specifier: 8.57.0
+        version: 8.57.0
+      typescript:
+        specifier: ^5.0.0
+        version: 5.9.3
+
   packages/events:
     dependencies:
       '@chessome/types':
