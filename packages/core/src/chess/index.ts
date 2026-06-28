@@ -1,5 +1,6 @@
 import { GameId, ValidationError, Result, ok, err } from '@chessome/shared';
 import { GameMetadata } from '@chessome/types';
+import { ITransaction } from '../shared';
 
 export class FenString {
   private constructor(public readonly value: string) {}
@@ -8,7 +9,6 @@ export class FenString {
     if (!value || value.trim().length === 0) {
       return err(new ValidationError('FEN string cannot be empty'));
     }
-    // Deep structural validation would go here.
     return ok(new FenString(value));
   }
 }
@@ -31,9 +31,13 @@ export class Game {
   public get moveCount(): number {
     return this.moves.length;
   }
+  
+  public get moveHistory(): readonly string[] {
+    return this.moves;
+  }
 }
 
 export interface IGameRepository {
-  findById(id: GameId): Promise<Result<Game, Error>>;
-  save(game: Game): Promise<Result<void, Error>>;
+  findById(id: GameId, tx?: ITransaction): Promise<Result<Game, Error>>;
+  save(game: Game, tx?: ITransaction): Promise<Result<void, Error>>;
 }

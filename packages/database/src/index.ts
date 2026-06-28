@@ -11,3 +11,8 @@ export const prisma = globalForPrisma.prisma ?? new PrismaClient();
 if (process.env.NODE_ENV !== 'production') {
   globalForPrisma.prisma = prisma;
 }
+
+export * from './uow';
+export * from './mappers/GameMapper';
+export * from './repositories/PrismaGameRepository';
+export * from './tests/contracts/GameRepositoryContract';

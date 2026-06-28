@@ -1,5 +1,6 @@
 import { AnalysisId, GameId, ValidationError, Result, ok, err } from '@chessome/shared';
 import { EngineName, EngineVersion } from '../engine';
+import { ITransaction } from '../shared';
 
 export class Depth {
   private constructor(public readonly value: number) {}
@@ -33,6 +34,6 @@ export class Analysis {
 }
 
 export interface IAnalysisRepository {
-  findById(id: AnalysisId): Promise<Result<Analysis, Error>>;
-  save(analysis: Analysis): Promise<Result<void, Error>>;
+  findById(id: AnalysisId, tx?: ITransaction): Promise<Result<Analysis, Error>>;
+  save(analysis: Analysis, tx?: ITransaction): Promise<Result<void, Error>>;
 }
