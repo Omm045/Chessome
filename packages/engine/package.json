@@ -9,16 +9,18 @@
     "dev": "tsc --watch",
     "lint": "eslint \"src/**/*.ts\"",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "test:compliance": "vitest run src/uci/compliance"
   },
   "dependencies": {
-    "@chessome/shared": "workspace:*",
-    "@chessome/events": "workspace:*"
+    "@chessome/events": "workspace:*",
+    "@chessome/shared": "workspace:*"
   },
   "devDependencies": {
     "@chessome/config": "workspace:*",
     "@types/node": "^20.0.0",
     "eslint": "8.57.0",
+    "fast-check": "^4.8.0",
     "typescript": "^5.0.0",
     "vitest": "^1.6.0"
   }

@@ -1,0 +1,18 @@
+some garbage data string before uci even starts
+uciok
+id name UnknownEngine
+id author John Doe
+option name WeirdType type something default 1
+option name MissingType default 10
+info depth -1
+info string This is a string with no info following it
+info depth 5 score cp pv e2e4
+info depth 10 score mate -0 pv e2e4
+info depth 20 multipv 0
+info pv
+info nps string nodes string time
+info depth 10 seldepth 12 score cp 12 nodes 100 pv e2e4 e7e5 pv d2d4
+bestmove
+bestmove e2e4 ponder
+bestmove e2e4 ponder e7e5 extra garbage
+readyok extra tokens

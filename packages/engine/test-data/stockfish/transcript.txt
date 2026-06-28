@@ -1,0 +1,39 @@
+Stockfish 16.1 by the Stockfish developers (see AUTHORS file)
+uci
+id name Stockfish 16.1
+id author the Stockfish developers (see AUTHORS file)
+
+option name Debug Log File type string default 
+option name Threads type spin default 1 min 1 max 1024
+option name Hash type spin default 16 min 1 max 33554432
+option name Clear Hash type button
+option name Ponder type check default false
+option name MultiPV type spin default 1 min 1 max 500
+option name Skill Level type spin default 20 min 0 max 20
+option name Move Overhead type spin default 10 min 0 max 5000
+option name Slow Mover type spin default 100 min 10 max 1000
+option name nodestime type spin default 0 min 0 max 10000
+option name UCI_Chess960 type check default false
+option name UCI_AnalyseMode type check default false
+option name UCI_LimitStrength type check default false
+option name UCI_Elo type spin default 1320 min 1320 max 3190
+option name UCI_ShowWDL type check default false
+option name SyzygyPath type string default <empty>
+option name SyzygyProbeDepth type spin default 1 min 1 max 100
+option name Syzygy50MoveRule type check default true
+option name SyzygyProbeLimit type spin default 7 min 0 max 7
+option name EvalFile type string default nn-b1a57edbea57.nnue
+uciok
+isready
+readyok
+ucinewgame
+isready
+readyok
+position startpos moves e2e4 e7e5
+go depth 5
+info depth 1 seldepth 1 multipv 1 score cp 39 nodes 20 nps 20000 tbhits 0 time 1 pv g1f3
+info depth 2 seldepth 2 multipv 1 score cp 44 nodes 62 nps 62000 tbhits 0 time 1 pv g1f3 b8c6
+info depth 3 seldepth 3 multipv 1 score cp 40 nodes 115 nps 115000 tbhits 0 time 1 pv g1f3 b8c6 d2d4
+info depth 4 seldepth 4 multipv 1 score cp 51 nodes 354 nps 354000 tbhits 0 time 1 pv g1f3 b8c6 f1b5 a7a6
+info depth 5 seldepth 6 multipv 1 score cp 31 nodes 813 nps 406500 tbhits 0 time 2 pv g1f3 b8c6 f1b5 a7a6 b5a4
+bestmove g1f3 ponder b8c6

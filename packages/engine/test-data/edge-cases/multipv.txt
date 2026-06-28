@@ -1,0 +1,4 @@
+info depth 10 seldepth 14 multipv 1 score cp 33 nodes 12345 nps 54321 tbhits 0 time 123 pv e2e4 e7e5 g1f3
+info depth 10 seldepth 14 multipv 2 score cp 15 nodes 12345 nps 54321 tbhits 0 time 123 pv d2d4 d7d5 c2c4
+info depth 10 seldepth 14 multipv 3 score cp -10 nodes 12345 nps 54321 tbhits 0 time 123 pv g1f3 g8f6
+info depth 10 seldepth 14 multipv 4 score cp -25 nodes 12345 nps 54321 tbhits 0 time 123 pv c2c4 e7e5

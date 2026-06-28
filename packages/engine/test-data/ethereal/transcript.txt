@@ -1,0 +1,19 @@
+info string Ethereal 14.25
+uci
+id name Ethereal 14.25
+id author Andrew Grant
+option name Hash type spin default 16 min 1 max 1048576
+option name Threads type spin default 1 min 1 max 256
+option name Clear Hash type button
+option name MultiPV type spin default 1 min 1 max 256
+option name Ponder type check default false
+option name UCI_Chess960 type check default false
+option name SyzygyPath type string default <empty>
+uciok
+isready
+readyok
+position fen rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
+go depth 2
+info depth 1 seldepth 1 multipv 1 score cp 31 nodes 20 nps 20000 tbhits 0 time 1 pv d2d4
+info depth 2 seldepth 2 multipv 1 score cp 18 nodes 55 nps 55000 tbhits 0 time 1 pv d2d4 g8f6
+bestmove d2d4 ponder g8f6
