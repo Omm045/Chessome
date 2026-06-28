@@ -12,3 +12,5 @@ export * from './uci';
 export * from './plugin';
 export * from './binary';
 export * from './recovery';
+export * from './allocator';
+export * from './pool';

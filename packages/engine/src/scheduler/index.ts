@@ -1,22 +1,27 @@
-import { IEngineProcess } from '../processes';
+import { ISchedulerPolicy } from './policy';
+import { ILeasedSession } from '../pool';
 
-export interface ISchedulerConfig {
-  maxConcurrency: number;
-  queueTimeoutMs: number;
+export interface SchedulerConfig {
+  readonly maxQueueSize: number;
+  readonly defaultTimeoutMs: number;
 }
 
 export interface IEngineScheduler {
-  readonly config: ISchedulerConfig;
+  readonly policy: ISchedulerPolicy;
+  readonly config: SchedulerConfig;
   
-  enqueueWork(request: SchedulerRequest): Promise<IEngineProcess>;
-  cancelWork(requestId: string): Promise<void>;
-  getActiveWorkers(): number;
-  getQueueDepth(): number;
+  /**
+   * Enqueues a request for a session. Blocks until a session is allocated or the timeout expires.
+   * Provides backpressure when the underlying pool is saturated.
+   * @param pluginId The requested engine plugin.
+   * @param timeoutMs The max time to wait in the queue before failing.
+   */
+  requestSession(pluginId: string, timeoutMs?: number): Promise<ILeasedSession>;
+  
+  /**
+   * Returns current scheduler queue statistics.
+   */
+  getQueueLength(): number;
 }
 
-export interface SchedulerRequest {
-  id: string;
-  engineId: string;
-  priority: number;
-  timeoutMs?: number;
-}
+export * from './policy';
