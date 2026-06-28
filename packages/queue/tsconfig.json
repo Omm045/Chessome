@@ -1,0 +1,16 @@
+{
+  "extends": "@chessome/config/tsconfig.base.json",
+  "compilerOptions": {
+    "target": "es2022",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "strict": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}
