@@ -5,8 +5,14 @@ export class QueueContract {
   constructor(private readonly queue: IJobQueue<any>) {}
 
   async testEnqueueAndCancel(): Promise<boolean> {
-    const payload = { data: 'test' };
-    const jobId = await this.queue.enqueue(payload, {
+    const envelope = { 
+      jobId: 'job-123',
+      correlationId: 'corr-123',
+      deduplicationKey: 'dedup-123',
+      attempt: 1,
+      payload: { data: 'test' } 
+    };
+    const jobId = await this.queue.enqueue(envelope, {
       retries: 1,
       backoff: { type: 'fixed', delayMs: 1000 },
       timeoutMs: 5000,

@@ -7,13 +7,21 @@ export class MessageBusContract {
     const topic = 'contract.test.topic';
     let received = false;
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const subId = await this.bus.subscribe(topic, async (msg: any) => {
       if (msg.eventId === '123') {
         received = true;
       }
     });
 
-    await this.bus.publish(topic, { eventId: '123', timestamp: Date.now(), version: 1 });
+    await this.bus.publish(topic, { 
+      eventId: '123',
+      eventVersion: 1,
+      schemaVersion: 1,
+      occurredAt: new Date().toISOString(),
+      producer: 'test',
+      correlationId: 'corr-123'
+    });
     
     // Wait briefly for delivery
     await new Promise(resolve => setTimeout(resolve, 50));

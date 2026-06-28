@@ -1,14 +1,14 @@
 import { Queue } from 'bullmq';
-import { IJobQueue, JobConfig } from '@chessome/core';
+import { IJobQueue, JobConfig, IJobEnvelope } from '@chessome/core';
 import { InfrastructureError } from '@chessome/shared';
 
-export class BullMQJobQueue<T> implements IJobQueue<T> {
+export class BullMQJobQueue<T extends IJobEnvelope> implements IJobQueue<T> {
   constructor(private readonly queue: Queue<T>) {}
 
-  async enqueue(payload: T, config?: JobConfig): Promise<string> {
+  async enqueue(envelope: T, config?: JobConfig): Promise<string> {
     try {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const job = await this.queue.add('job' as any, payload as any, {
+      const job = await this.queue.add('job' as any, envelope as any, {
         attempts: config?.retries || 3,
         backoff: config?.backoff ? {
           type: config.backoff.type,
@@ -23,7 +23,7 @@ export class BullMQJobQueue<T> implements IJobQueue<T> {
     }
   }
 
-  async dequeue(): Promise<{ jobId: string; payload: T } | null> {
+  async dequeue(): Promise<T | null> {
     throw new InfrastructureError('Manual dequeue is not typically supported by BullMQ without Worker');
   }
 
@@ -49,10 +49,10 @@ export class BullMQJobQueue<T> implements IJobQueue<T> {
     }
   }
 
-  async delay(payload: T, delayMs: number, config?: JobConfig): Promise<string> {
+  async delay(envelope: T, delayMs: number, config?: JobConfig): Promise<string> {
     try {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const job = await this.queue.add('job' as any, payload as any, {
+      const job = await this.queue.add('job' as any, envelope as any, {
         delay: delayMs,
         attempts: config?.retries || 3,
         priority: config?.priority,

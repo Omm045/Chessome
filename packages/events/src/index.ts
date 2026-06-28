@@ -6,8 +6,12 @@ export enum EventNames {
 
 export interface IEventPayload {
   readonly eventId: string;
-  readonly timestamp: number;
-  readonly version: number;
+  readonly eventVersion: number;
+  readonly schemaVersion: number;
+  readonly occurredAt: string;
+  readonly producer: string;
+  readonly correlationId: string;
+  readonly causationId?: string;
 }
 
 export interface GameImportedEvent extends IEventPayload {

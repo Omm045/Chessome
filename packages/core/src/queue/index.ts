@@ -9,10 +9,19 @@ export interface JobConfig {
   readonly priority: number;
 }
 
-export interface IJobQueue<TPayload> {
-  enqueue(payload: TPayload, config?: JobConfig): Promise<string>;
-  dequeue(): Promise<{ jobId: string, payload: TPayload } | null>;
+export interface IJobEnvelope<T = unknown> {
+  readonly jobId: string; // Used for deduplication in queue
+  readonly correlationId: string; // Traces entire request flow
+  readonly causationId?: string; // ID of event/job that triggered this
+  readonly deduplicationKey: string; // Business logic dedup key
+  readonly attempt: number; // Incrementing attempt counter
+  readonly payload: T;
+}
+
+export interface IJobQueue<TEnvelope extends IJobEnvelope> {
+  enqueue(envelope: TEnvelope, config?: JobConfig): Promise<string>;
+  dequeue(): Promise<TEnvelope | null>;
   retry(jobId: string): Promise<void>;
   cancel(jobId: string): Promise<void>;
-  delay(payload: TPayload, delayMs: number, config?: JobConfig): Promise<string>;
+  delay(envelope: TEnvelope, delayMs: number, config?: JobConfig): Promise<string>;
 }

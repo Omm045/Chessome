@@ -28,6 +28,12 @@ enum WorkerStatus {
   OFFLINE
 }
 
+enum OutboxEventStatus {
+  PENDING
+  PUBLISHED
+  FAILED
+}
+
 model Game {
   id          String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   white       String       @db.VarChar
@@ -80,4 +86,26 @@ model MoveEvaluation {
   @@index([fen], name: "idx_evaluations_fen")
   @@index([analysisId], name: "idx_evaluations_analysis")
   @@map("move_evaluations")
+}
+
+model OutboxEvent {
+  id            String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  eventType     String            @map("event_type") @db.VarChar
+  payload       Json
+  status        OutboxEventStatus @default(PENDING)
+  createdAt     DateTime          @default(now()) @map("created_at") @db.Timestamptz
+  processedAt   DateTime?         @map("processed_at") @db.Timestamptz
+
+  @@index([status, createdAt], name: "idx_outbox_status_created")
+  @@map("outbox_events")
+}
+
+model ProcessedJob {
+  id            String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  jobId         String      @map("job_id") @db.VarChar
+  workerName    String      @map("worker_name") @db.VarChar
+  processedAt   DateTime    @default(now()) @map("processed_at") @db.Timestamptz
+
+  @@unique([jobId, workerName], name: "idx_processed_jobs_unique")
+  @@map("processed_jobs")
 }

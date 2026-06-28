@@ -24,3 +24,4 @@ export interface IUnitOfWork {
   // Scoped execution to automatically handle commit/rollback
   execute<T>(work: (tx: ITransaction) => Promise<T>): Promise<T>;
 }
+export * from './orchestration';
