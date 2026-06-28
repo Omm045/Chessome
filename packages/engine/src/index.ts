@@ -9,3 +9,6 @@ export * from './sessions/events';
 export * from './runtime';
 export * from './metrics';
 export * from './uci';
+export * from './plugin';
+export * from './binary';
+export * from './recovery';
