@@ -1,0 +1,23 @@
+{
+  "name": "@chessome/pgn",
+  "version": "1.0.0",
+  "private": true,
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint \"src/**/*.ts\"",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@chessome/shared": "workspace:*",
+    "@chessome/types": "workspace:*",
+    "@mliebelt/pgn-parser": "^1.4.19"
+  },
+  "devDependencies": {
+    "@chessome/config": "workspace:*",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.4.5",
+    "vitest": "^1.6.0"
+  }
+}
