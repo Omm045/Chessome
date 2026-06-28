@@ -1,0 +1,23 @@
+{
+  "name": "@chessome/storage",
+  "version": "1.0.0",
+  "private": true,
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "lint": "eslint \"src/**/*.ts\"",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@chessome/core": "workspace:*",
+    "@chessome/shared": "workspace:*"
+  },
+  "devDependencies": {
+    "@chessome/config": "workspace:*",
+    "@types/node": "^20.0.0",
+    "eslint": "8.57.0",
+    "typescript": "^5.0.0"
+  }
+}

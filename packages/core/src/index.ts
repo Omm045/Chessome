@@ -5,3 +5,4 @@ export * from './openings';
 export * from './studies';
 export * from './training';
 export * from './shared';
+export * from './storage';
