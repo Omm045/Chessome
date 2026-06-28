@@ -1,0 +1,12 @@
+[Event "Rated Blitz game"]
+[Site "https://lichess.org/dummy"]
+[Date "2023.01.01"]
+[White "Player1"]
+[Black "Player2"]
+[Result "1-0"]
+[WhiteElo "1500"]
+[BlackElo "1500"]
+[TimeControl "300+0"]
+[Termination "Normal"]
+
+1. e4 e5 2. Nf3 Nc6 1-0

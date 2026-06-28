@@ -42,7 +42,14 @@ export class MliebeltPgnAdapter {
     const tags: TagNode[] = [];
     if (rawGame.tags) {
       for (const [key, value] of Object.entries(rawGame.tags)) {
-        tags.push({ type: 'Tag', key, value: String(value) });
+        if (key === 'messages') continue;
+        
+        let strValue = String(value);
+        if (value && typeof value === 'object' && 'value' in value) {
+            strValue = String((value as any).value);
+        }
+        
+        tags.push({ type: 'Tag', key, value: strValue });
       }
     }
 
@@ -76,6 +83,16 @@ export class MliebeltPgnAdapter {
         const postComments = token.commentAfter ? [this.mapComment(token.commentAfter)] : [];
         
         const allComments = [...comments, ...postComments];
+        
+        // Handle commentDiag (like [%clk 1:00:00])
+        if (token.commentDiag) {
+          const diagCommands: Record<string, string> = {};
+          if (token.commentDiag.clk) diagCommands['clk'] = String(token.commentDiag.clk);
+          if (token.commentDiag.eval !== undefined) diagCommands['eval'] = String(token.commentDiag.eval);
+          // Combine back into a fake comment or keep in commands
+          const text = Object.entries(diagCommands).map(([k, v]) => `[%${k} ${v}]`).join(' ');
+          allComments.push({ type: 'Comment', text, commands: diagCommands });
+        }
         const nags = (token.nag || []).map((code: string) => ({ type: 'Nag', code: parseInt(code.replace('$', ''), 10) } as NagNode));
         
         const variations = (token.variations || []).map((v: any[]) => ({
