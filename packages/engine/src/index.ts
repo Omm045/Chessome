@@ -8,3 +8,4 @@ export * from './sessions';
 export * from './sessions/events';
 export * from './runtime';
 export * from './metrics';
+export * from './uci';
