@@ -1,0 +1,14 @@
+{
+  "engineId": "stockfish",
+  "version": "16.1",
+  "metrics": {
+    "startupMs": 15,
+    "handshakeMs": 4,
+    "nodesPerSecond": 4500000,
+    "hashEfficiencyPercent": 98.2,
+    "memoryUsageMb": 32,
+    "latencyMs": 1.2
+  },
+  "environment": "macOS-Apple-Silicon",
+  "recordedAt": "2026-06-28T12:00:00Z"
+}

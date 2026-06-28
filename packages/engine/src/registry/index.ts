@@ -3,6 +3,10 @@ import { EngineHealthInfo } from '../plugin/health';
 import { IEngineCapabilityModel } from '../capabilities';
 
 export interface IEngineRegistry {
+  /**
+   * Discovers plugins and performs version negotiation.
+   * If a plugin does not meet the minimum runtime version, it is actively rejected.
+   */
   discover(plugins: IEnginePlugin[]): Promise<void>;
   register(plugin: IEnginePlugin): void;
   unregister(pluginId: string): void;

@@ -1,20 +1,37 @@
-import { IEnginePlugin, EnginePluginManifest } from '@chessome/engine';
+import { IEnginePlugin, IEnginePluginManifestV2 } from '@chessome/engine';
 import { STOCKFISH_MANIFEST } from './manifest';
 
 export class StockfishNativePlugin implements IEnginePlugin {
-  get manifest(): EnginePluginManifest {
+  get manifest(): IEnginePluginManifestV2 {
     return {
       ...STOCKFISH_MANIFEST,
-      id: 'org.stockfishchess.stockfish.native'
+      pluginId: 'org.stockfishchess.stockfish.native',
+      runtimeType: 'native'
     };
   }
 
-  async initialize(): Promise<void> {
-    // Acquire the correct binary for the host platform.
-    // E.g., await binaryProvider.resolveBinary(this.manifest.id, { ... })
+  async install(): Promise<void> {
+    // Download binary from the BinarySource
   }
 
-  async dispose(): Promise<void> {
-    // Cleanup any lingering processes or temporary files if necessary.
+  async verify(): Promise<boolean> {
+    // Verify hash, signature, and permissions
+    return true;
+  }
+
+  async activate(): Promise<void> {
+    // Bring the plugin into a Ready state
+  }
+
+  async deactivate(): Promise<void> {
+    // Gracefully shut down any processes
+  }
+
+  async update(): Promise<void> {
+    // Perform auto-update if configured
+  }
+
+  async uninstall(): Promise<void> {
+    // Delete binaries and cached data
   }
 }
