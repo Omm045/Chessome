@@ -3,9 +3,12 @@ import { InteractiveBoard } from './Board/InteractiveBoard';
 import { EnginePanel } from './Panels/EnginePanel';
 import { MoveList } from './Panels/MoveList';
 import { EvaluationGraph } from './Graph/EvaluationGraph';
+import { useKeyboardScrubbing } from '../hooks/useKeyboardScrubbing';
 import './AnalysisWorkspace.css';
 
 export function AnalysisWorkspace() {
+  useKeyboardScrubbing();
+
   return (
     <div className="analysis-workspace">
       

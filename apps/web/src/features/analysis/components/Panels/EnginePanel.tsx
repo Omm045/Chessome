@@ -2,6 +2,7 @@ import React from 'react';
 import { useAnalysisStore } from '../../store/analysisStore';
 import { Panel } from '../../../../components/ui/Panel';
 import { Settings2, Cpu } from 'lucide-react';
+import './EnginePanel.css';
 
 export function EnginePanel() {
   const { depth, nodes, nps, currentPv, status } = useAnalysisStore();
@@ -26,14 +27,19 @@ export function EnginePanel() {
         </button>
       </div>
 
-      <div style={{ display: 'flex', gap: '1.5rem', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
-        <div><span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>Depth:</span> {depth}</div>
-        <div><span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>Nodes:</span> {formatNodes(nodes)}</div>
-        <div><span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>NPS:</span> {formatNodes(nps)}</div>
+      <div className="engine-metrics">
+        <div><span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>Depth:</span> <span className="engine-metric-value">{depth}</span></div>
+        <div><span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>Nodes:</span> <span className="engine-metric-value">{formatNodes(nodes)}</span></div>
+        <div><span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>NPS:</span> <span className="engine-metric-value">{formatNodes(nps)}</span></div>
       </div>
 
       <div style={{ flex: 1, overflowY: 'auto', fontSize: '0.875rem', fontFamily: 'monospace', lineHeight: 1.6, paddingRight: '0.5rem' }}>
-        {currentPv.length > 0 ? (
+        {status === 'queued' ? (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+            <div className="pulse-skeleton" style={{ width: '80%' }}></div>
+            <div className="pulse-skeleton" style={{ width: '60%' }}></div>
+          </div>
+        ) : currentPv.length > 0 ? (
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
             {currentPv.map((move, i) => (
               <span key={i} style={{ color: i === 0 ? 'var(--accent-primary)' : 'var(--text-primary)', fontWeight: i === 0 ? 600 : 400 }}>

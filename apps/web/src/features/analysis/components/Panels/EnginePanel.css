@@ -1,0 +1,31 @@
+/* apps/web/src/features/analysis/components/Panels/EnginePanel.css */
+
+.engine-metrics {
+  font-variant-numeric: tabular-nums;
+  display: flex;
+  gap: 1.5rem;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.engine-metric-value {
+  display: inline-block;
+  min-width: 40px; /* Provide a baseline width so UI doesn't collapse */
+}
+
+/* Skeleton animation for queued state */
+.pulse-skeleton {
+  animation: pulse-op 1.5s ease-in-out infinite;
+  background-color: var(--border-color);
+  border-radius: var(--radius-sm);
+  color: transparent !important; /* Hide the fallback text if any */
+  min-width: 100px;
+  height: 1.2rem;
+  display: inline-block;
+}
+
+@keyframes pulse-op {
+  0% { opacity: 0.5; }
+  50% { opacity: 1; }
+  100% { opacity: 0.5; }
+}

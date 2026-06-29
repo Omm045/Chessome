@@ -3,8 +3,10 @@ import { useAnalysisStore } from '../../store/analysisStore';
 import { Panel } from '../../../../components/ui/Panel';
 
 export function EvaluationGraph() {
-  const { evaluations, setScrubPly } = useAnalysisStore();
+  const { currentPly, scrubPly, evaluations, setScrubPly } = useAnalysisStore();
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  
+  const activePly = scrubPly ?? currentPly;
 
   // Simple Canvas render for the evaluation line
   useEffect(() => {
@@ -72,16 +74,38 @@ export function EvaluationGraph() {
     setScrubPly(null);
   };
 
+  // Calculate playhead position
+  const maxPlies = Math.max(evaluations.length - 1, 40);
+  const playheadPercent = maxPlies > 0 ? (activePly / maxPlies) * 100 : 0;
+
   return (
-    <Panel padding="sm" style={{ width: '100%', height: '120px', position: 'relative', overflow: 'hidden' }}>
-      <canvas 
-        ref={canvasRef}
-        width={800} // Internal resolution
-        height={100} // Internal resolution
-        style={{ width: '100%', height: '100%', cursor: 'crosshair', display: 'block' }}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-      />
+    <Panel padding="sm" style={{ width: '100%', height: '120px', display: 'flex' }}>
+      <div style={{ position: 'relative', width: '100%', height: '100%', overflow: 'hidden' }}>
+        <canvas 
+          ref={canvasRef}
+          width={800} // Internal resolution
+          height={100} // Internal resolution
+          style={{ width: '100%', height: '100%', cursor: 'crosshair', display: 'block' }}
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseLeave}
+        />
+        
+        {/* Playhead Indicator */}
+        {evaluations.length > 0 && activePly > 0 && (
+          <div style={{
+            position: 'absolute',
+            top: 0,
+            bottom: 0,
+            left: `${playheadPercent}%`,
+            width: '2px',
+            backgroundColor: 'var(--accent-primary)',
+            pointerEvents: 'none',
+            transition: 'left 0.1s ease-out',
+            boxShadow: '0 0 8px var(--accent-primary)',
+            zIndex: 10
+          }} />
+        )}
+      </div>
     </Panel>
   );
 }

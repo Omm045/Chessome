@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useAnalysisStore } from '../../store/analysisStore';
 import { Panel } from '../../../../components/ui/Panel';
 import { FileClock } from 'lucide-react';
@@ -6,8 +6,15 @@ import { PositionCompletedEventDto } from '@chessome/types';
 
 export function MoveList() {
   const { currentPly, scrubPly, setScrubPly, evaluations } = useAnalysisStore();
+  const activeMoveRef = useRef<HTMLButtonElement>(null);
 
   const activePly = scrubPly ?? currentPly;
+
+  useEffect(() => {
+    if (activeMoveRef.current) {
+      activeMoveRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }, [activePly]);
 
   // Mock a basic move list derived from the ply count
   // In a real implementation, this requires full PGN parsing to standard algebraic notation.
@@ -37,6 +44,7 @@ export function MoveList() {
                   isActive={activePly === ply}
                   evalData={evaluations[ply]}
                   onClick={() => setScrubPly(ply)}
+                  ref={activePly === ply ? activeMoveRef : null}
                 />
                 
                 {ply + 1 <= currentPly && (
@@ -45,6 +53,7 @@ export function MoveList() {
                     isActive={activePly === ply + 1}
                     evalData={evaluations[ply + 1]}
                     onClick={() => setScrubPly(ply + 1)}
+                    ref={activePly === ply + 1 ? activeMoveRef : null}
                   />
                 )}
               </React.Fragment>
@@ -56,7 +65,8 @@ export function MoveList() {
   );
 }
 
-function MoveButton({ ply, isActive, evalData, onClick }: { ply: number, isActive: boolean, evalData: PositionCompletedEventDto | undefined, onClick: () => void }) {
+const MoveButton = React.forwardRef<HTMLButtonElement, { ply: number, isActive: boolean, evalData: PositionCompletedEventDto | undefined, onClick: () => void }>(
+  ({ ply, isActive, evalData, onClick }, ref) => {
   // Determine icon/color based on classification
   let color = 'inherit';
   if (evalData?.classification === 'blunder') color = 'var(--eval-blunder)';
@@ -67,6 +77,7 @@ function MoveButton({ ply, isActive, evalData, onClick }: { ply: number, isActiv
 
   return (
     <button
+      ref={ref}
       onClick={onClick}
       style={{
         background: isActive ? 'var(--bg-secondary)' : 'transparent',
@@ -92,4 +103,4 @@ function MoveButton({ ply, isActive, evalData, onClick }: { ply: number, isActiv
       )}
     </button>
   );
-}
+});
