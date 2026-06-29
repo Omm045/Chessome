@@ -185,7 +185,7 @@ export class LiveAnalysisService {
           nodes: 0, 
           nps: 0,
           timeMs: event.elapsedMs,
-          currentPv: [] 
+          currentPv: [] // We update this separately when engine fires PV
         };
         
       case 'PositionCompleted':
@@ -197,6 +197,8 @@ export class LiveAnalysisService {
             value: event.evaluation.evaluation.value
           },
           bestMove: event.evaluation.pv[0] || event.evaluation.move?.san || '',
+          fen: event.fen,
+          san: event.san,
           classification: undefined // Not implemented in engine yet
         };
         

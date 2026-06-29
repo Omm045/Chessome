@@ -22,7 +22,6 @@ export function MoveList() {
       
       <div style={{ flex: 1, overflowY: 'auto', padding: '0.5rem' }}>
         <div style={{ display: 'grid', gridTemplateColumns: '30px 1fr 1fr', gap: '0.25rem', fontSize: '0.9rem' }}>
-          
           {moves.map((ply) => {
             if (ply % 2 === 0) return null; // Only render on White's turn (odd plies)
             const moveNum = Math.ceil(ply / 2);
@@ -85,7 +84,7 @@ function MoveButton({ ply, isActive, evalData, onClick }: { ply: number, isActiv
       onMouseOver={(e) => { if(!isActive) e.currentTarget.style.backgroundColor = 'var(--bg-secondary)'; }}
       onMouseOut={(e) => { if(!isActive) e.currentTarget.style.backgroundColor = 'transparent'; }}
     >
-      <span>Move {ply}</span>
+      <span>{evalData?.san || `Move ${ply}`}</span>
       {evalData?.classification && (
         <span style={{ color, fontWeight: 800 }}>
           {evalData.classification === 'blunder' ? '??' : evalData.classification === 'brilliant' ? '!!' : evalData.classification === 'mistake' ? '?' : '!'}

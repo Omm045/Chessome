@@ -3,7 +3,7 @@ import { AnalysisReport } from './AnalysisReport';
 
 export type AnalysisStartedEvent = { type: 'AnalysisStarted'; sessionId: string; gameId?: string };
 export type PositionStartedEvent = { type: 'PositionStarted'; sessionId: string; ply: number };
-export type PositionCompletedEvent = { type: 'PositionCompleted'; sessionId: string; ply: number; evaluation: PositionEvaluation };
+export type PositionCompletedEvent = { type: 'PositionCompleted'; sessionId: string; ply: number; evaluation: PositionEvaluation; fen?: string; san?: string };
 export type EngineRestartedEvent = { type: 'EngineRestarted'; sessionId: string; reason: string };
 export type ProgressUpdatedEvent = { 
   type: 'ProgressUpdated'; 

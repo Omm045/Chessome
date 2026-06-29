@@ -68,6 +68,8 @@ function simulateMockStream(processEvent: (event: AnalysisEventDto) => void, set
           ply,
           evaluation: { type: 'cp', value: Math.floor(Math.random() * 200) - 100 },
           bestMove: 'e2e4',
+          fen: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
+          san: 'e4',
           classification: Math.random() > 0.8 ? 'good' : undefined
         });
         ply++;

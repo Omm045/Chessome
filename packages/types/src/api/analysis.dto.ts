@@ -39,6 +39,8 @@ export interface PositionCompletedEventDto {
     value: number;
   };
   bestMove: string;
+  fen: string;
+  san: string;
   classification?: 'brilliant' | 'good' | 'inaccuracy' | 'mistake' | 'blunder';
 }
 

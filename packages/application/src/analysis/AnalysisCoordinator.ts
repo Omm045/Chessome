@@ -50,7 +50,14 @@ export class AnalysisCoordinator {
         this.aggregator.addEvaluation(posEval);
         this.session.updateCheckpoint(state.ply);
 
-        yield { type: 'PositionCompleted', sessionId: this.session.sessionId, ply: state.ply, evaluation: posEval };
+        yield { 
+          type: 'PositionCompleted', 
+          sessionId: this.session.sessionId, 
+          ply: state.ply, 
+          evaluation: posEval,
+          fen,
+          san: (state.lastMove as any)?.san || ''
+        };
         yield { 
           type: 'ProgressUpdated', 
           sessionId: this.session.sessionId, 
