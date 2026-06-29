@@ -14,9 +14,11 @@ export default function Home() {
       </p>
       
       <div style={{ display: 'flex', gap: '1rem' }}>
-        <Button size="lg" variant="primary">
-          Analyze Game
-        </Button>
+        <Link href="/analyze/mock" passHref>
+          <Button size="lg" variant="primary">
+            Analyze Game (Mock)
+          </Button>
+        </Link>
         <Link href="/sandbox" passHref>
           <Button size="lg" variant="secondary">
             View Components
