@@ -7,3 +7,4 @@ export * from './engine';
 export * from './events';
 export * from './plugin';
 export * from './user';
+export * from './api/analysis.dto';
