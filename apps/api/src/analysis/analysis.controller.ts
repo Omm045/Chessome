@@ -2,15 +2,21 @@ import { Controller, Post, Get, Delete, Body, Param, HttpCode, HttpStatus, Sse }
 import { Observable } from 'rxjs';
 import { AnalyzeRequest } from './dto/analyze-request.dto';
 import { AnalysisCreatedResponseDto, AnalysisEventDto, AnalysisReportDto } from '@chessome/types';
+import { LiveAnalysisService } from './live-analysis.service';
 
 @Controller('v1/analysis')
 export class AnalysisController {
   
+  constructor(private readonly liveAnalysisService: LiveAnalysisService) {}
+
   @Post()
   @HttpCode(HttpStatus.ACCEPTED)
   async startAnalysis(@Body() request: AnalyzeRequest): Promise<AnalysisCreatedResponseDto> {
-    // Scaffold implementation
-    const sessionId = 'mock-session-id';
+    const sessionId = `sess_${Date.now()}_${Math.random().toString(36).substring(7)}`;
+    
+    // Start the analysis in the background
+    this.liveAnalysisService.startLiveAnalysis(sessionId, request);
+    
     return {
       sessionId,
       status: 'queued',
@@ -20,13 +26,12 @@ export class AnalysisController {
 
   @Sse(':sessionId/stream')
   streamAnalysis(@Param('sessionId') sessionId: string): Observable<{ data: AnalysisEventDto }> {
-    // Scaffold implementation returning empty observable for now
-    return new Observable();
+    return this.liveAnalysisService.getStream(sessionId);
   }
 
   @Get(':sessionId')
   async getAnalysisReport(@Param('sessionId') sessionId: string): Promise<AnalysisReportDto> {
-    // Scaffold implementation
+    // Scaffold implementation for MVP
     return {
       sessionId,
       totalPositions: 0,
@@ -37,7 +42,7 @@ export class AnalysisController {
   @Delete(':sessionId')
   @HttpCode(HttpStatus.NO_CONTENT)
   async cancelAnalysis(@Param('sessionId') sessionId: string): Promise<void> {
-    // Scaffold implementation
+    // TODO: implement cancellation
     return;
   }
 }
