@@ -25,7 +25,7 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v3
         with:
-          version: 11.9.0
+          version: 9.0.0
 
       - name: Get pnpm store directory
         id: pnpm-cache
@@ -49,22 +49,22 @@ jobs:
         if: github.event_name == 'pull_request'
 
       - name: Typecheck
-        run: pnpm -r run typecheck
+        run: pnpm run typecheck
 
       - name: ESLint
-        run: pnpm -r run lint
+        run: pnpm run lint
 
       - name: Prettier (Check Only)
         run: npx prettier --check .
 
       - name: Build All Workspaces
-        run: pnpm -r run build
+        run: pnpm run build
 
       - name: Run Unit Tests
-        run: pnpm -r run test --if-present
+        run: pnpm run test --if-present
 
       - name: Run Integration Tests
-        run: pnpm -r run test:integration --if-present
+        run: pnpm run test:integration --if-present
 
       - name: Dependency Graph & Boundary Validation
         run: npx depcruise packages apps --config .dependency-cruiser.js
@@ -82,7 +82,7 @@ jobs:
         run: npx license-checker --summary --failOn "GPL;AGPL"
 
       - name: Security & Secret Audit
-        run: npx trufflehog filesystem . --fail
+        uses: trufflesecurity/trufflehog@main
 
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v4

@@ -7,7 +7,8 @@
     "dev": "turbo run dev",
     "lint": "turbo run lint",
     "test": "turbo run test",
-    "typecheck": "turbo run typecheck"
+    "typecheck": "turbo run typecheck",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@commitlint/cli": "^21.1.0",
@@ -27,5 +28,9 @@
   "pnpm": {
     "onlyBuiltDependencies": []
   },
-  "packageManager": "pnpm@9.0.0"
+  "packageManager": "pnpm@9.0.0",
+  "lint-staged": {
+    "*.ts": "eslint --fix",
+    "*.{ts,js,json,md}": "prettier --write"
+  }
 }
