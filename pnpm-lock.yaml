@@ -540,6 +540,12 @@ importers:
 
   packages/testing:
     dependencies:
+      '@chessome/core':
+        specifier: workspace:*
+        version: link:../core
+      '@chessome/ports':
+        specifier: workspace:*
+        version: link:../ports
       '@chessome/shared':
         specifier: workspace:*
         version: link:../shared
