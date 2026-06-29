@@ -1,0 +1,111 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum GameResult {
+  WHITE_WIN // 1-0
+  BLACK_WIN // 0-1
+  DRAW      // 1/2-1/2
+  ONGOING   // *
+}
+
+enum AnalysisStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+  CANCELLED
+}
+
+enum WorkerStatus {
+  IDLE
+  BUSY
+  OFFLINE
+}
+
+enum OutboxEventStatus {
+  PENDING
+  PUBLISHED
+  FAILED
+}
+
+model Game {
+  id          String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  white       String       @db.VarChar
+  black       String       @db.VarChar
+  date        DateTime     @db.Date
+  result      GameResult
+  initialFen  String       @map("initial_fen") @db.VarChar
+  pgnText     String       @map("pgn_text") @db.Text
+  moveCount   Int          @map("move_count")
+  createdAt   DateTime     @default(now()) @map("created_at") @db.Timestamptz
+  deletedAt   DateTime?    @map("deleted_at") @db.Timestamptz
+
+  analysisJobs AnalysisJob[]
+
+  @@index([white, black], name: "idx_games_players")
+  @@index([createdAt], name: "idx_games_created_at")
+  @@map("games")
+}
+
+model AnalysisJob {
+  id          String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  gameId      String         @map("game_id") @db.Uuid
+  depth       Int
+  engine      String         @db.VarChar
+  status      AnalysisStatus @default(PENDING)
+  progress    Int            @default(0)
+  createdAt   DateTime       @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt   DateTime       @updatedAt @map("updated_at") @db.Timestamptz
+
+  game        Game           @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  evaluations MoveEvaluation[]
+
+  @@index([status], name: "idx_analysis_jobs_status")
+  @@index([gameId], name: "idx_analysis_jobs_game")
+  @@map("analysis_jobs")
+}
+
+model MoveEvaluation {
+  id            String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  analysisId    String      @map("analysis_id") @db.Uuid
+  fen           String      @db.VarChar
+  depthAchieved Int         @map("depth_achieved")
+  scoreCp       Int?        @map("score_cp")
+  scoreMate     Int?        @map("score_mate")
+  pv            String[]    @db.Text
+  createdAt     DateTime    @default(now()) @map("created_at") @db.Timestamptz
+
+  analysisJob   AnalysisJob @relation(fields: [analysisId], references: [id], onDelete: Cascade)
+
+  @@index([fen], name: "idx_evaluations_fen")
+  @@index([analysisId], name: "idx_evaluations_analysis")
+  @@map("move_evaluations")
+}
+
+model OutboxEvent {
+  id            String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  eventType     String            @map("event_type") @db.VarChar
+  payload       Json
+  status        OutboxEventStatus @default(PENDING)
+  createdAt     DateTime          @default(now()) @map("created_at") @db.Timestamptz
+  processedAt   DateTime?         @map("processed_at") @db.Timestamptz
+
+  @@index([status, createdAt], name: "idx_outbox_status_created")
+  @@map("outbox_events")
+}
+
+model ProcessedJob {
+  id            String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  jobId         String      @map("job_id") @db.VarChar
+  workerName    String      @map("worker_name") @db.VarChar
+  processedAt   DateTime    @default(now()) @map("processed_at") @db.Timestamptz
+
+  @@unique([jobId, workerName], name: "idx_processed_jobs_unique")
+  @@map("processed_jobs")
+}

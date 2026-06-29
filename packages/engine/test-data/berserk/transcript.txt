@@ -1,0 +1,24 @@
+Berserk 13 by Marlin
+uci
+id name Berserk 13
+id author Marlin
+
+option name Threads type spin default 1 min 1 max 1024
+option name Hash type spin default 16 min 1 max 1048576
+option name Clear Hash type button
+option name Ponder type check default false
+option name MultiPV type spin default 1 min 1 max 256
+option name UCI_Chess960 type check default false
+option name SyzygyPath type string default <empty>
+option name SyzygyProbeDepth type spin default 1 min 1 max 100
+option name Syzygy50MoveRule type check default true
+option name SyzygyProbeLimit type spin default 7 min 0 max 7
+uciok
+isready
+readyok
+position fen r1bqkbnr/pppp1ppp/2n5/1B2p3/4P3/5N2/PPPP1PPP/RNBQK2R b KQkq - 3 3
+go wtime 15000 btime 15000 winc 0 binc 0
+info depth 1 seldepth 1 multipv 1 score cp -21 nodes 12 nps 12000 tbhits 0 time 1 pv a7a6
+info depth 2 seldepth 2 multipv 1 score cp -15 nodes 50 nps 50000 tbhits 0 time 1 pv a7a6 b5c6
+info depth 3 seldepth 3 multipv 1 score cp -30 nodes 182 nps 182000 tbhits 0 time 1 pv a7a6 b5a4 g8f6
+bestmove a7a6 ponder b5a4

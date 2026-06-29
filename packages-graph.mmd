@@ -1,0 +1,1763 @@
+flowchart LR
+
+subgraph 0["apps"]
+subgraph 1["api"]
+2[".eslintrc.js"]
+subgraph 3["dist"]
+4["app.module.d.ts"]
+5["app.module.js"]
+subgraph 6["health"]
+7["health.module.js"]
+8["health.controller.js"]
+G["health.controller.d.ts"]
+H["health.module.d.ts"]
+end
+subgraph 9["common"]
+subgraph A["filters"]
+B["global-exception.filter.d.ts"]
+C["global-exception.filter.js"]
+end
+subgraph D["middleware"]
+E["request-id.middleware.d.ts"]
+F["request-id.middleware.js"]
+end
+end
+I["main.d.ts"]
+J["main.js"]
+end
+subgraph K["src"]
+L["app.module.ts"]
+subgraph M["health"]
+N["health.module.ts"]
+O["health.controller.ts"]
+end
+subgraph P["common"]
+subgraph Q["filters"]
+R["global-exception.filter.ts"]
+end
+subgraph S["middleware"]
+T["request-id.middleware.ts"]
+end
+end
+U["main.ts"]
+end
+end
+subgraph V["web"]
+W[".eslintrc.js"]
+subgraph X[".next"]
+Y["prerender-manifest.js"]
+subgraph Z["server"]
+subgraph 10["app"]
+subgraph 11["_not-found"]
+12["page.js"]
+14["page_client-reference-manifest.js"]
+end
+15["page.js"]
+16["page_client-reference-manifest.js"]
+end
+13["webpack-runtime.js"]
+subgraph 17["chunks"]
+18["217.js"]
+19["524.js"]
+end
+1A["interception-route-rewrite-manifest.js"]
+1B["middleware-build-manifest.js"]
+1C["middleware-react-loadable-manifest.js"]
+1D["next-font-manifest.js"]
+subgraph 1E["pages"]
+1F["_app.js"]
+1G["_document.js"]
+1H["_error.js"]
+end
+1I["server-reference-manifest.js"]
+end
+subgraph 1J["static"]
+subgraph 1K["chunks"]
+1L["816-f337b84623b06a0d.js"]
+subgraph 1M["app"]
+subgraph 1N["_not-found"]
+1O["page-4f7534f60e86c410.js"]
+end
+1P["layout-a3ddce86cbbc0fb3.js"]
+1Q["page-4164c42eb0028d6e.js"]
+end
+1R["b14ee3bf-fe720c6834f30a1f.js"]
+1S["framework-bef83a85c94ff7de.js"]
+1T["main-8effab4f6eefd30b.js"]
+1U["main-app-29709b3ddbf25156.js"]
+subgraph 1V["pages"]
+1W["_app-0e3a34159409dad3.js"]
+1X["_error-e6d8e29e6354775f.js"]
+end
+1Y["polyfills-78c92fac7aa8fdd8.js"]
+1Z["webpack-fa13b99f8b0ae872.js"]
+end
+subgraph 20["xzszyrPzWeKSoTgk6TVvy"]
+21["_buildManifest.js"]
+22["_ssgManifest.js"]
+end
+end
+subgraph 23["types"]
+subgraph 24["app"]
+25["layout.ts"]
+2A["page.ts"]
+end
+end
+end
+subgraph 26["src"]
+subgraph 27["app"]
+28["layout.tsx"]
+29["globals.css"]
+2B["page.tsx"]
+end
+end
+2C["next-env.d.ts"]
+2D["next.config.js"]
+end
+end
+subgraph 2E["packages"]
+subgraph 2F["cache"]
+2G[".eslintrc.js"]
+subgraph 2H["dist"]
+subgraph 2I["adapters"]
+2J["RedisCache.d.ts"]
+3J["RedisCache.js"]
+end
+3K["index.d.ts"]
+subgraph 3L["tests"]
+subgraph 3M["contracts"]
+3N["CacheContract.js"]
+3P["CacheContract.d.ts"]
+end
+end
+3O["index.js"]
+end
+subgraph 3Q["src"]
+3R["CacheKeyBuilder.ts"]
+subgraph 3S["adapters"]
+3T["RedisCache.ts"]
+end
+3U["index.ts"]
+subgraph 3V["tests"]
+subgraph 3W["contracts"]
+3X["CacheContract.ts"]
+end
+end
+end
+end
+subgraph 2K["ports"]
+subgraph 2L["dist"]
+2M["index.js"]
+subgraph 2N["cache"]
+2O["index.js"]
+H6["index.d.ts"]
+end
+subgraph 2P["concurrency"]
+2Q["index.js"]
+HB["index.d.ts"]
+end
+subgraph 2R["messaging"]
+2S["index.js"]
+HH["index.d.ts"]
+end
+2T["orchestration.js"]
+subgraph 2U["queue"]
+2V["index.js"]
+HL["index.d.ts"]
+end
+subgraph 2W["storage"]
+2X["index.js"]
+HM["index.d.ts"]
+end
+H0["analysis.d.ts"]
+H1["analysis.js"]
+H2["api.d.ts"]
+H3["api.js"]
+H4["auth.d.ts"]
+H5["auth.js"]
+H7["chess.d.ts"]
+H8["chess.js"]
+H9["common.d.ts"]
+HA["common.js"]
+HC["engine.d.ts"]
+HD["engine.js"]
+HE["events.d.ts"]
+HF["events.js"]
+HG["index.d.ts"]
+HI["orchestration.d.ts"]
+HJ["plugin.d.ts"]
+HK["plugin.js"]
+HN["user.d.ts"]
+HO["user.js"]
+end
+GZ[".eslintrc.js"]
+subgraph HP["src"]
+subgraph HQ["cache"]
+HR["index.ts"]
+end
+subgraph HS["concurrency"]
+HT["index.ts"]
+end
+HU["index.ts"]
+subgraph HV["messaging"]
+HW["index.ts"]
+end
+HX["orchestration.ts"]
+subgraph HY["queue"]
+HZ["index.ts"]
+end
+subgraph I0["storage"]
+I1["index.ts"]
+end
+end
+end
+subgraph 2Y["shared"]
+subgraph 2Z["dist"]
+30["index.js"]
+subgraph 31["assertions"]
+32["index.js"]
+IM["index.d.ts"]
+end
+subgraph 33["errors"]
+34["index.js"]
+IP["index.d.ts"]
+end
+subgraph 35["branding"]
+36["index.js"]
+IN["index.d.ts"]
+end
+subgraph 37["constants"]
+38["index.js"]
+IO["index.d.ts"]
+end
+subgraph 39["ids"]
+3A["index.js"]
+IQ["index.d.ts"]
+end
+subgraph 3B["logging"]
+3C["index.js"]
+IS["index.d.ts"]
+end
+subgraph 3D["primitives"]
+3E["index.js"]
+IT["index.d.ts"]
+end
+subgraph 3F["result"]
+3G["index.js"]
+IU["index.d.ts"]
+end
+subgraph 3H["time"]
+3I["index.js"]
+IV["index.d.ts"]
+end
+IR["index.d.ts"]
+end
+IL[".eslintrc.js"]
+subgraph IW["src"]
+subgraph IX["assertions"]
+IY["index.ts"]
+end
+subgraph IZ["errors"]
+J0["index.ts"]
+end
+subgraph J1["branding"]
+J2["index.ts"]
+end
+subgraph J3["constants"]
+J4["index.ts"]
+end
+subgraph J5["ids"]
+J6["index.ts"]
+end
+J7["index.ts"]
+subgraph J8["logging"]
+J9["index.ts"]
+end
+subgraph JA["primitives"]
+JB["index.ts"]
+end
+subgraph JC["result"]
+JD["index.ts"]
+end
+subgraph JE["time"]
+JF["index.ts"]
+end
+end
+end
+subgraph 3Y["config"]
+3Z["eslint-preset.js"]
+end
+subgraph 40["core"]
+41[".eslintrc.js"]
+subgraph 42["dist"]
+subgraph 43["analysis"]
+44["index.d.ts"]
+49["index.js"]
+end
+subgraph 45["engine"]
+46["index.js"]
+4V["index.d.ts"]
+end
+subgraph 47["shared"]
+48["index.js"]
+5B["index.d.ts"]
+5C["orchestration.d.ts"]
+5D["orchestration.js"]
+end
+subgraph 4A["cache"]
+4B["index.d.ts"]
+4C["index.js"]
+end
+subgraph 4D["chess"]
+4E["index.d.ts"]
+4R["index.js"]
+end
+subgraph 4S["concurrency"]
+4T["index.d.ts"]
+4U["index.js"]
+end
+4W["index.d.ts"]
+subgraph 4X["openings"]
+4Y["index.js"]
+57["index.d.ts"]
+end
+subgraph 4Z["studies"]
+50["index.js"]
+5H["index.d.ts"]
+end
+subgraph 51["training"]
+52["index.js"]
+5I["index.d.ts"]
+end
+53["index.js"]
+subgraph 54["messaging"]
+55["index.d.ts"]
+56["index.js"]
+end
+subgraph 58["queue"]
+59["index.d.ts"]
+5A["index.js"]
+end
+subgraph 5E["storage"]
+5F["index.d.ts"]
+5G["index.js"]
+end
+end
+subgraph 5J["src"]
+subgraph 5K["analysis"]
+5L["index.ts"]
+end
+subgraph 5M["engine"]
+5N["index.ts"]
+end
+subgraph 5O["shared"]
+5P["index.ts"]
+end
+subgraph 5Q["chess"]
+5R["index.ts"]
+end
+5S["index.ts"]
+subgraph 5T["openings"]
+5U["index.ts"]
+end
+subgraph 5V["studies"]
+5W["index.ts"]
+end
+subgraph 5X["training"]
+5Y["index.ts"]
+end
+end
+end
+subgraph 4F["types"]
+subgraph 4G["dist"]
+4H["index.js"]
+4I["analysis.js"]
+4J["api.js"]
+4K["auth.js"]
+4L["chess.js"]
+4M["common.js"]
+4N["engine.js"]
+4O["events.js"]
+4P["plugin.js"]
+4Q["user.js"]
+LB["analysis.d.ts"]
+LC["api.d.ts"]
+LD["auth.d.ts"]
+LE["chess.d.ts"]
+LF["common.d.ts"]
+LG["engine.d.ts"]
+LH["events.d.ts"]
+LI["index.d.ts"]
+LJ["plugin.d.ts"]
+LK["user.d.ts"]
+end
+LA[".eslintrc.js"]
+subgraph LL["src"]
+LM["analysis.ts"]
+LN["api.ts"]
+LO["auth.ts"]
+LP["chess.ts"]
+LQ["common.ts"]
+LR["engine.ts"]
+LS["events.ts"]
+LT["index.ts"]
+LU["plugin.ts"]
+LV["user.ts"]
+end
+end
+subgraph 5Z["database"]
+60[".eslintrc.js"]
+subgraph 61["dist"]
+62["index.d.ts"]
+subgraph 63["mappers"]
+64["GameMapper.js"]
+6D["GameMapper.d.ts"]
+end
+subgraph 65["repositories"]
+66["PrismaGameRepository.js"]
+6E["PrismaGameRepository.d.ts"]
+end
+67["index.js"]
+subgraph 68["tests"]
+subgraph 69["contracts"]
+6A["GameRepositoryContract.js"]
+6F["GameRepositoryContract.d.ts"]
+end
+end
+subgraph 6B["uow"]
+6C["index.js"]
+6G["index.d.ts"]
+end
+end
+subgraph 6H["src"]
+6I["index.ts"]
+subgraph 6J["mappers"]
+6K["GameMapper.ts"]
+end
+subgraph 6L["repositories"]
+6M["PrismaGameRepository.ts"]
+end
+subgraph 6N["uow"]
+6O["index.ts"]
+end
+subgraph 6P["tests"]
+subgraph 6Q["contracts"]
+6R["GameRepositoryContract.ts"]
+end
+end
+end
+end
+subgraph 6S["engine-stockfish"]
+6T[".eslintrc.js"]
+subgraph 6U["benchmarks"]
+6V["engine.bench.ts"]
+end
+subgraph 6W["src"]
+6X["index.ts"]
+6Y["manifest.ts"]
+8J["native-plugin.ts"]
+8K["wasm-plugin.ts"]
+8Q["plugin.test.ts"]
+end
+subgraph 8L["dist"]
+8M["index.js"]
+8N["manifest.js"]
+8O["native-plugin.js"]
+8P["wasm-plugin.js"]
+end
+end
+subgraph 6Z["engine"]
+subgraph 70["dist"]
+71["index.js"]
+subgraph 72["adapters"]
+73["index.js"]
+8S["index.d.ts"]
+end
+subgraph 74["allocator"]
+75["index.js"]
+8T["index.d.ts"]
+end
+subgraph 76["binary"]
+77["index.js"]
+78["provider.js"]
+79["verifier.js"]
+8U["index.d.ts"]
+8V["provider.d.ts"]
+8W["verifier.d.ts"]
+end
+subgraph 7A["capabilities"]
+7B["index.js"]
+8X["index.d.ts"]
+end
+subgraph 7C["metrics"]
+7D["index.js"]
+8Z["index.d.ts"]
+end
+subgraph 7E["plugin"]
+7F["index.js"]
+7G["health.js"]
+7H["manifest.js"]
+90["health.d.ts"]
+91["index.d.ts"]
+92["manifest.d.ts"]
+end
+subgraph 7I["pool"]
+7J["index.js"]
+7K["metrics.js"]
+93["index.d.ts"]
+94["metrics.d.ts"]
+end
+subgraph 7L["processes"]
+7M["index.js"]
+95["index.d.ts"]
+end
+subgraph 7N["recovery"]
+7O["index.js"]
+96["index.d.ts"]
+end
+subgraph 7P["registry"]
+7Q["index.js"]
+97["index.d.ts"]
+end
+subgraph 7R["runtime"]
+7S["index.js"]
+subgraph 98["certification"]
+99["concurrency.test.d.ts"]
+9A["concurrency.test.js"]
+9B["fault-isolation.test.d.ts"]
+9C["fault-isolation.test.js"]
+9D["lifecycle.test.d.ts"]
+9E["lifecycle.test.js"]
+9F["recovery.test.d.ts"]
+9G["recovery.test.js"]
+9H["scheduler-fairness.test.d.ts"]
+9I["scheduler-fairness.test.js"]
+end
+9J["index.d.ts"]
+end
+subgraph 7T["scheduler"]
+7U["index.js"]
+7V["policy.js"]
+9K["index.d.ts"]
+9L["policy.d.ts"]
+end
+subgraph 7W["sessions"]
+7X["index.js"]
+7Y["events.js"]
+9M["events.d.ts"]
+9Q["index.d.ts"]
+end
+subgraph 7Z["transports"]
+80["index.js"]
+9R["index.d.ts"]
+end
+subgraph 81["uci"]
+82["index.js"]
+subgraph 83["commands"]
+84["index.js"]
+9S["index.d.ts"]
+end
+subgraph 85["compliance"]
+86["index.js"]
+9T["corpus.test.d.ts"]
+9U["corpus.test.js"]
+9V["fuzz.test.d.ts"]
+9W["fuzz.test.js"]
+9X["index.d.ts"]
+9Y["stress.test.d.ts"]
+9Z["stress.test.js"]
+end
+subgraph 87["decoder"]
+88["index.js"]
+A0["decoder.test.d.ts"]
+A1["decoder.test.js"]
+A2["index.d.ts"]
+end
+subgraph 89["encoder"]
+8A["index.js"]
+A3["encoder.test.d.ts"]
+A4["encoder.test.js"]
+A5["index.d.ts"]
+end
+subgraph 8B["protocol"]
+8C["index.js"]
+8D["errors.js"]
+8E["state.js"]
+A7["errors.d.ts"]
+A8["index.d.ts"]
+A9["state.d.ts"]
+AA["state.test.d.ts"]
+AB["state.test.js"]
+end
+subgraph 8F["responses"]
+8G["index.js"]
+AC["index.d.ts"]
+end
+subgraph 8H["validator"]
+8I["index.js"]
+AD["index.d.ts"]
+end
+A6["index.d.ts"]
+end
+8Y["index.d.ts"]
+end
+8R[".eslintrc.js"]
+subgraph AE["scripts"]
+AF["check-performance-gates.ts"]
+end
+subgraph AG["src"]
+subgraph AH["adapters"]
+AI["index.ts"]
+end
+subgraph AJ["allocator"]
+AK["index.ts"]
+end
+subgraph AL["plugin"]
+AM["manifest.ts"]
+AR["health.ts"]
+AZ["index.ts"]
+end
+subgraph AN["registry"]
+AO["index.ts"]
+end
+subgraph AP["capabilities"]
+AQ["index.ts"]
+end
+subgraph AS["binary"]
+AT["index.ts"]
+AU["provider.ts"]
+AV["verifier.ts"]
+end
+AW["index.ts"]
+subgraph AX["metrics"]
+AY["index.ts"]
+end
+subgraph B0["pool"]
+B1["index.ts"]
+B2["metrics.ts"]
+end
+subgraph B3["processes"]
+B4["index.ts"]
+end
+subgraph B5["transports"]
+B6["index.ts"]
+end
+subgraph B7["recovery"]
+B8["index.ts"]
+end
+subgraph B9["runtime"]
+BA["index.ts"]
+subgraph BZ["certification"]
+C0["concurrency.test.ts"]
+C1["fault-isolation.test.ts"]
+C2["lifecycle.test.ts"]
+C3["recovery.test.ts"]
+C4["scheduler-fairness.test.ts"]
+end
+end
+subgraph BB["scheduler"]
+BC["index.ts"]
+BD["policy.ts"]
+end
+subgraph BE["sessions"]
+BF["index.ts"]
+BG["events.ts"]
+end
+subgraph BH["uci"]
+BI["index.ts"]
+subgraph BJ["commands"]
+BK["index.ts"]
+end
+subgraph BL["compliance"]
+BM["index.ts"]
+C5["corpus.test.ts"]
+C6["fuzz.test.ts"]
+C7["stress.test.ts"]
+end
+subgraph BN["decoder"]
+BO["index.ts"]
+C8["decoder.test.ts"]
+end
+subgraph BP["responses"]
+BQ["index.ts"]
+end
+subgraph BR["encoder"]
+BS["index.ts"]
+C9["encoder.test.ts"]
+end
+subgraph BT["protocol"]
+BU["index.ts"]
+BV["errors.ts"]
+BW["state.ts"]
+CA["state.test.ts"]
+end
+subgraph BX["validator"]
+BY["index.ts"]
+end
+end
+end
+end
+subgraph 9N["events"]
+subgraph 9O["dist"]
+9P["index.js"]
+CC["index.d.ts"]
+end
+CB[".eslintrc.js"]
+subgraph CD["src"]
+CE["index.ts"]
+end
+end
+subgraph CF["fen"]
+CG[".eslintrc.js"]
+subgraph CH["dist"]
+subgraph CI["ast"]
+CJ["index.d.ts"]
+CK["index.js"]
+end
+subgraph CL["certification"]
+CM["corpus.test.d.ts"]
+CN["corpus.test.js"]
+CY["edge-cases.test.d.ts"]
+CZ["edge-cases.test.js"]
+D0["fuzz.test.d.ts"]
+D1["fuzz.test.js"]
+D2["illegal.test.d.ts"]
+D3["illegal.test.js"]
+D4["official.test.d.ts"]
+D5["official.test.js"]
+D6["roundtrip.test.d.ts"]
+D7["roundtrip.test.js"]
+end
+subgraph CO["position"]
+CP["index.js"]
+DF["index.d.ts"]
+end
+subgraph CQ["diagnostic"]
+CR["index.js"]
+DA["index.d.ts"]
+end
+subgraph CS["parser"]
+CT["index.js"]
+DE["index.d.ts"]
+end
+subgraph CU["tokenizer"]
+CV["index.js"]
+DG["index.d.ts"]
+end
+subgraph CW["validator"]
+CX["index.js"]
+DH["index.d.ts"]
+end
+subgraph D8["hash"]
+D9["index.js"]
+DB["index.d.ts"]
+end
+DC["index.d.ts"]
+DD["index.js"]
+end
+subgraph DI["src"]
+subgraph DJ["ast"]
+DK["index.ts"]
+end
+subgraph DL["certification"]
+DM["corpus.test.ts"]
+DX["edge-cases.test.ts"]
+DY["fuzz.test.ts"]
+DZ["illegal.test.ts"]
+E0["official.test.ts"]
+E1["roundtrip.test.ts"]
+end
+subgraph DN["position"]
+DO["index.ts"]
+end
+subgraph DP["diagnostic"]
+DQ["index.ts"]
+end
+subgraph DR["parser"]
+DS["index.ts"]
+end
+subgraph DT["tokenizer"]
+DU["index.ts"]
+end
+subgraph DV["validator"]
+DW["index.ts"]
+end
+subgraph E2["hash"]
+E3["index.ts"]
+end
+E4["index.ts"]
+end
+end
+subgraph E5["messaging"]
+E6[".eslintrc.js"]
+subgraph E7["dist"]
+subgraph E8["adapters"]
+E9["RedisMessageBus.d.ts"]
+EA["RedisMessageBus.js"]
+end
+EB["index.d.ts"]
+subgraph EC["tests"]
+subgraph ED["contracts"]
+EE["MessageBusContract.js"]
+EG["MessageBusContract.d.ts"]
+end
+end
+EF["index.js"]
+end
+subgraph EH["src"]
+subgraph EI["adapters"]
+EJ["RedisMessageBus.ts"]
+end
+EK["index.ts"]
+subgraph EL["tests"]
+subgraph EM["contracts"]
+EN["MessageBusContract.ts"]
+end
+end
+end
+end
+subgraph EO["orchestration"]
+EP[".eslintrc.js"]
+subgraph EQ["dist"]
+ER["BaseHandler.d.ts"]
+ES["BaseHandler.js"]
+ET["BaseWorker.d.ts"]
+EU["BaseWorker.js"]
+EV["OutboxPublisher.d.ts"]
+EW["OutboxPublisher.js"]
+EX["index.d.ts"]
+EY["index.js"]
+end
+subgraph EZ["src"]
+F0["BaseHandler.ts"]
+F1["BaseWorker.ts"]
+F2["OutboxPublisher.ts"]
+F3["index.ts"]
+end
+end
+subgraph F4["pgn"]
+F5[".eslintrc.js"]
+subgraph F6["dist"]
+subgraph F7["adapter"]
+F8["index.d.ts"]
+F9["mliebelt.js"]
+FC["index.js"]
+FD["mliebelt.d.ts"]
+FG["mliebelt.test.d.ts"]
+FH["mliebelt.test.js"]
+end
+subgraph FA["diagnostic"]
+FB["index.js"]
+G7["index.d.ts"]
+end
+subgraph FE["ast"]
+FF["index.js"]
+FI["index.d.ts"]
+end
+subgraph FJ["certification"]
+FK["annotations.test.d.ts"]
+FL["annotations.test.js"]
+FM["ast-validation.test.d.ts"]
+FN["ast-validation.test.js"]
+FO["comments.test.d.ts"]
+FP["comments.test.js"]
+FQ["corpus.test.d.ts"]
+FR["corpus.test.js"]
+FS["fuzz.test.d.ts"]
+FT["fuzz.test.js"]
+FU["official.test.d.ts"]
+FV["official.test.js"]
+FW["recovery.test.d.ts"]
+FX["recovery.test.js"]
+FY["streaming.test.d.ts"]
+FZ["streaming.test.js"]
+G3["variations.test.d.ts"]
+G4["variations.test.js"]
+end
+subgraph G0["stream"]
+G1["index.js"]
+G2["splitter.js"]
+GA["index.d.ts"]
+GB["splitter.d.ts"]
+end
+G5["debug.d.ts"]
+G6["debug.js"]
+G8["index.d.ts"]
+G9["index.js"]
+end
+subgraph GC["src"]
+subgraph GD["adapter"]
+GE["index.ts"]
+GF["mliebelt.ts"]
+GK["mliebelt.test.ts"]
+end
+subgraph GG["ast"]
+GH["index.ts"]
+end
+subgraph GI["diagnostic"]
+GJ["index.ts"]
+end
+subgraph GL["certification"]
+GM["annotations.test.ts"]
+GN["ast-validation.test.ts"]
+GO["comments.test.ts"]
+GP["corpus.test.ts"]
+GQ["fuzz.test.ts"]
+GR["official.test.ts"]
+GS["recovery.test.ts"]
+GT["streaming.test.ts"]
+GX["variations.test.ts"]
+end
+subgraph GU["stream"]
+GV["index.ts"]
+GW["splitter.ts"]
+end
+GY["index.ts"]
+end
+end
+subgraph I2["queue"]
+I3[".eslintrc.js"]
+subgraph I4["dist"]
+subgraph I5["adapters"]
+I6["BullMQJobQueue.d.ts"]
+I7["BullMQJobQueue.js"]
+end
+I8["index.d.ts"]
+subgraph I9["tests"]
+subgraph IA["contracts"]
+IB["QueueContract.js"]
+ID["QueueContract.d.ts"]
+end
+end
+IC["index.js"]
+end
+subgraph IE["src"]
+subgraph IF["adapters"]
+IG["BullMQJobQueue.ts"]
+end
+IH["index.ts"]
+subgraph II["tests"]
+subgraph IJ["contracts"]
+IK["QueueContract.ts"]
+end
+end
+end
+end
+subgraph JG["storage"]
+JH[".eslintrc.js"]
+subgraph JI["dist"]
+subgraph JJ["adapters"]
+JK["LocalStorageAdapter.d.ts"]
+JL["LocalStorageAdapter.js"]
+end
+JM["index.d.ts"]
+subgraph JN["tests"]
+subgraph JO["contracts"]
+JP["StorageContract.js"]
+JR["StorageContract.d.ts"]
+end
+end
+JQ["index.js"]
+end
+subgraph JS["src"]
+subgraph JT["adapters"]
+JU["LocalStorageAdapter.ts"]
+end
+JV["index.ts"]
+subgraph JW["tests"]
+subgraph JX["contracts"]
+JY["StorageContract.ts"]
+end
+end
+end
+end
+subgraph JZ["testing"]
+K0[".eslintrc.js"]
+subgraph K1["dist"]
+subgraph K2["builders"]
+K3["index.d.ts"]
+K4["index.js"]
+end
+subgraph K5["factories"]
+K6["index.d.ts"]
+K7["index.js"]
+end
+subgraph K8["fakes"]
+K9["index.d.ts"]
+KA["index.js"]
+end
+subgraph KB["fixtures"]
+KC["index.d.ts"]
+KD["index.js"]
+end
+subgraph KE["helpers"]
+KF["index.d.ts"]
+KG["index.js"]
+end
+KH["index.d.ts"]
+subgraph KI["matchers"]
+KJ["index.js"]
+KP["index.d.ts"]
+end
+subgraph KK["mocks"]
+KL["index.js"]
+KQ["index.d.ts"]
+end
+subgraph KM["setup"]
+KN["index.js"]
+KR["index.d.ts"]
+end
+KO["index.js"]
+end
+subgraph KS["src"]
+subgraph KT["builders"]
+KU["index.ts"]
+end
+subgraph KV["factories"]
+KW["index.ts"]
+end
+subgraph KX["fakes"]
+KY["index.ts"]
+end
+subgraph KZ["fixtures"]
+L0["index.ts"]
+end
+subgraph L1["helpers"]
+L2["index.ts"]
+end
+L3["index.ts"]
+subgraph L4["matchers"]
+L5["index.ts"]
+end
+subgraph L6["mocks"]
+L7["index.ts"]
+end
+subgraph L8["setup"]
+L9["index.ts"]
+end
+end
+end
+subgraph LW["validation"]
+LX[".eslintrc.js"]
+subgraph LY["dist"]
+subgraph LZ["analysis"]
+M0["index.d.ts"]
+M1["index.js"]
+end
+subgraph M2["api"]
+M3["index.d.ts"]
+M4["index.js"]
+end
+subgraph M5["auth"]
+M6["index.d.ts"]
+M7["index.js"]
+end
+subgraph M8["chess"]
+M9["index.d.ts"]
+MA["index.js"]
+end
+subgraph MB["common"]
+MC["index.d.ts"]
+MD["index.js"]
+end
+subgraph ME["engine"]
+MF["index.d.ts"]
+MG["index.js"]
+end
+subgraph MH["events"]
+MI["index.d.ts"]
+MJ["index.js"]
+end
+MK["index.d.ts"]
+subgraph ML["plugin"]
+MM["index.js"]
+MR["index.d.ts"]
+end
+MN["registry.js"]
+subgraph MO["user"]
+MP["index.js"]
+MT["index.d.ts"]
+end
+MQ["index.js"]
+MS["registry.d.ts"]
+end
+subgraph MU["src"]
+subgraph MV["analysis"]
+MW["index.ts"]
+end
+subgraph MX["api"]
+MY["index.ts"]
+end
+subgraph MZ["auth"]
+N0["index.ts"]
+end
+subgraph N1["chess"]
+N2["index.ts"]
+end
+subgraph N3["common"]
+N4["index.ts"]
+end
+subgraph N5["engine"]
+N6["index.ts"]
+end
+subgraph N7["events"]
+N8["index.ts"]
+end
+N9["index.ts"]
+subgraph NA["plugin"]
+NB["index.ts"]
+end
+NC["registry.ts"]
+subgraph ND["user"]
+NE["index.ts"]
+end
+end
+end
+end
+5-->7
+7-->8
+J-->5
+J-->C
+J-->F
+L-->N
+N-->O
+U-->L
+U-->R
+U-->T
+12-->13
+15-->13
+1F-->13
+1G-->13
+1H-->13
+25-->28
+28-->29
+2A-->2B
+2J-->2M
+2M-->2O
+2M-->2Q
+2M-->2S
+2M-->2T
+2M-->2V
+2M-->2X
+2X-->30
+30-->32
+30-->36
+30-->38
+30-->34
+30-->3A
+30-->3C
+30-->3E
+30-->3G
+30-->3I
+32-->34
+3J-->30
+3K-->3J
+3K-->3N
+3O-->3J
+3O-->3N
+3P-->2M
+3T-->2M
+3T-->30
+3U-->3T
+3U-->3R
+3U-->3X
+3X-->2M
+44-->46
+44-->48
+44-->30
+46-->30
+49-->30
+4E-->48
+4E-->30
+4E-->4H
+4H-->4I
+4H-->4J
+4H-->4K
+4H-->4L
+4H-->4M
+4H-->4N
+4H-->4O
+4H-->4P
+4H-->4Q
+4R-->30
+4V-->30
+4W-->49
+4W-->4R
+4W-->46
+4W-->4Y
+4W-->48
+4W-->50
+4W-->52
+4Y-->30
+50-->30
+52-->30
+53-->49
+53-->4R
+53-->46
+53-->4Y
+53-->48
+53-->50
+53-->52
+57-->30
+5F-->30
+5G-->30
+5H-->4R
+5H-->30
+5I-->4R
+5I-->30
+5L-->5N
+5L-->5P
+5L-->30
+5N-->30
+5R-->5P
+5R-->30
+5R-->4H
+5S-->5L
+5S-->5R
+5S-->5N
+5S-->5U
+5S-->5P
+5S-->5W
+5S-->5Y
+5U-->30
+5W-->5R
+5W-->30
+5Y-->5R
+5Y-->30
+62-->64
+62-->66
+62-->6A
+62-->6C
+64-->53
+64-->30
+66-->67
+66-->64
+66-->30
+67-->64
+67-->66
+67-->6A
+67-->6C
+6A-->53
+6C-->67
+6D-->53
+6D-->30
+6E-->53
+6E-->30
+6F-->53
+6G-->53
+6I-->6K
+6I-->6M
+6I-->6R
+6I-->6O
+6K-->53
+6K-->30
+6M-->6I
+6M-->6K
+6M-->6O
+6M-->53
+6M-->30
+6O-->6I
+6O-->53
+6R-->53
+6R-->30
+6V-->6X
+6V-->71
+6X-->6Y
+6X-->8J
+6X-->8K
+6Y-->71
+71-->73
+71-->75
+71-->77
+71-->7B
+71-->7D
+71-->7F
+71-->7J
+71-->7M
+71-->7O
+71-->7Q
+71-->7S
+71-->7U
+71-->7X
+71-->7Y
+71-->80
+71-->82
+77-->78
+77-->79
+7F-->7G
+7F-->7H
+7J-->7K
+7U-->7V
+82-->84
+82-->86
+82-->88
+82-->8A
+82-->8C
+82-->8G
+82-->8I
+8C-->8D
+8C-->8E
+8D-->30
+8E-->8D
+8I-->8D
+8J-->6Y
+8J-->71
+8K-->6Y
+8K-->71
+8M-->8N
+8M-->8O
+8M-->8P
+8O-->8N
+8P-->8N
+8Q-->6X
+8T-->7H
+8T-->7Q
+8U-->78
+8U-->79
+8W-->78
+8Y-->73
+8Y-->75
+8Y-->77
+8Y-->7B
+8Y-->7D
+8Y-->7F
+8Y-->7J
+8Y-->7M
+8Y-->7O
+8Y-->7Q
+8Y-->7S
+8Y-->7U
+8Y-->7X
+8Y-->7Y
+8Y-->80
+8Y-->82
+91-->7G
+91-->7H
+93-->7K
+95-->80
+97-->7B
+97-->7G
+97-->7H
+9J-->7D
+9J-->7Q
+9J-->7U
+9J-->7X
+9K-->7J
+9K-->7V
+9L-->7J
+9M-->9P
+9Q-->73
+9Q-->7Y
+9U-->88
+9W-->88
+9Z-->88
+9Z-->8E
+A1-->88
+A2-->8G
+A4-->8A
+A5-->84
+A6-->84
+A6-->86
+A6-->88
+A6-->8A
+A6-->8C
+A6-->8G
+A6-->8I
+A7-->30
+A8-->8D
+A8-->8E
+AB-->8D
+AB-->8E
+AD-->8G
+AK-->AM
+AK-->AO
+AO-->AQ
+AO-->AR
+AO-->AM
+AT-->AU
+AT-->AV
+AV-->AU
+AW-->AI
+AW-->AK
+AW-->AT
+AW-->AQ
+AW-->AY
+AW-->AZ
+AW-->B1
+AW-->B4
+AW-->B8
+AW-->AO
+AW-->BA
+AW-->BC
+AW-->BF
+AW-->BG
+AW-->B6
+AW-->BI
+AZ-->AR
+AZ-->AM
+B1-->B2
+B4-->B6
+BA-->AY
+BA-->AO
+BA-->BC
+BA-->BF
+BC-->B1
+BC-->BD
+BD-->B1
+BF-->AI
+BF-->BG
+BG-->9P
+BI-->BK
+BI-->BM
+BI-->BO
+BI-->BS
+BI-->BU
+BI-->BQ
+BI-->BY
+BO-->BQ
+BS-->BK
+BU-->BV
+BU-->BW
+BV-->30
+BW-->BV
+BY-->BV
+BY-->BQ
+C2-->B1
+C5-->BO
+C6-->BO
+C7-->BO
+C7-->BW
+C8-->BO
+C9-->BS
+CA-->BV
+CA-->BW
+CN-->CP
+CP-->CR
+CP-->CT
+CP-->CV
+CP-->CX
+CV-->CR
+CZ-->CP
+D1-->CP
+D3-->CR
+D3-->CP
+D5-->CP
+D7-->D9
+D7-->CP
+DB-->CK
+DC-->CK
+DC-->CR
+DC-->D9
+DC-->CT
+DC-->CP
+DC-->CV
+DC-->CX
+DD-->CK
+DD-->CR
+DD-->D9
+DD-->CT
+DD-->CP
+DD-->CV
+DD-->CX
+DE-->CK
+DE-->CR
+DF-->CK
+DH-->CK
+DH-->CR
+DM-->DO
+DO-->DK
+DO-->DQ
+DO-->DS
+DO-->DU
+DO-->DW
+DS-->DK
+DS-->DQ
+DU-->DQ
+DW-->DK
+DW-->DQ
+DX-->DO
+DY-->DQ
+DY-->DO
+DZ-->DQ
+DZ-->DO
+E0-->DO
+E1-->E3
+E1-->DO
+E3-->DK
+E4-->DK
+E4-->DQ
+E4-->E3
+E4-->DS
+E4-->DO
+E4-->DU
+E4-->DW
+E9-->2M
+EA-->9P
+EA-->30
+EB-->EA
+EB-->EE
+EF-->EA
+EF-->EE
+EG-->2M
+EJ-->9P
+EJ-->2M
+EJ-->30
+EK-->EJ
+EK-->EN
+EN-->2M
+ET-->ES
+ET-->2M
+EV-->53
+EV-->9P
+EV-->2M
+EW-->9P
+EX-->ES
+EX-->EU
+EX-->EW
+EY-->ES
+EY-->EU
+EY-->EW
+F1-->F0
+F1-->2M
+F2-->53
+F2-->9P
+F2-->2M
+F3-->F0
+F3-->F1
+F3-->F2
+F8-->F9
+F9-->FB
+FC-->F9
+FD-->FF
+FH-->F9
+FL-->FC
+FN-->FC
+FP-->FC
+FR-->FC
+FT-->FC
+FV-->FC
+FX-->FC
+FX-->FB
+FZ-->G1
+G1-->G2
+G4-->FC
+G8-->FC
+G8-->FF
+G8-->FB
+G8-->G1
+G9-->FC
+G9-->FF
+G9-->FB
+G9-->G1
+GA-->G2
+GE-->GF
+GF-->GH
+GF-->GJ
+GK-->GF
+GM-->GE
+GN-->GE
+GO-->GE
+GP-->GE
+GQ-->GE
+GR-->GE
+GS-->GE
+GS-->GJ
+GT-->GV
+GV-->GW
+GX-->GE
+GY-->GE
+GY-->GH
+GY-->GJ
+GY-->GV
+HG-->2O
+HG-->2Q
+HG-->2S
+HG-->2T
+HG-->2V
+HG-->2X
+HJ-->H8
+HJ-->HD
+HM-->30
+HN-->HA
+HU-->HR
+HU-->HT
+HU-->HW
+HU-->HX
+HU-->HZ
+HU-->I1
+I1-->30
+I6-->2M
+I7-->30
+I8-->I7
+I8-->IB
+IC-->I7
+IC-->IB
+ID-->2M
+IG-->2M
+IG-->30
+IH-->IG
+IH-->IK
+IK-->2M
+IQ-->36
+IR-->32
+IR-->36
+IR-->38
+IR-->34
+IR-->3A
+IR-->3C
+IR-->3E
+IR-->3G
+IR-->3I
+IT-->36
+IY-->J0
+J6-->J2
+J7-->IY
+J7-->J2
+J7-->J4
+J7-->J0
+J7-->J6
+J7-->J9
+J7-->JB
+J7-->JD
+J7-->JF
+JB-->J2
+JK-->2M
+JK-->30
+JL-->2M
+JL-->30
+JM-->JL
+JM-->JP
+JQ-->JL
+JQ-->JP
+JR-->2M
+JU-->2M
+JU-->30
+JV-->JU
+JV-->JY
+JY-->2M
+K3-->4H
+K6-->4H
+K9-->30
+KH-->K4
+KH-->K7
+KH-->KA
+KH-->KD
+KH-->KG
+KH-->KJ
+KH-->KL
+KH-->KN
+KO-->K4
+KO-->K7
+KO-->KA
+KO-->KD
+KO-->KG
+KO-->KJ
+KO-->KL
+KO-->KN
+KU-->4H
+KW-->4H
+KY-->30
+L3-->KU
+L3-->KW
+L3-->KY
+L3-->L0
+L3-->L2
+L3-->L5
+L3-->L7
+L3-->L9
+LI-->4I
+LI-->4J
+LI-->4K
+LI-->4L
+LI-->4M
+LI-->4N
+LI-->4O
+LI-->4P
+LI-->4Q
+LJ-->4L
+LJ-->4N
+LK-->4M
+LT-->LM
+LT-->LN
+LT-->LO
+LT-->LP
+LT-->LQ
+LT-->LR
+LT-->LS
+LT-->LU
+LT-->LV
+LU-->LP
+LU-->LR
+LV-->LQ
+M0-->4H
+M1-->4H
+M6-->4H
+M7-->4H
+M9-->4H
+MA-->4H
+MI-->9P
+MJ-->9P
+MK-->M1
+MK-->M4
+MK-->M7
+MK-->MA
+MK-->MD
+MK-->MG
+MK-->MJ
+MK-->MM
+MK-->MN
+MK-->MP
+MN-->M1
+MN-->M4
+MN-->M7
+MN-->MA
+MN-->MD
+MN-->MG
+MN-->MJ
+MN-->MP
+MP-->MD
+MQ-->M1
+MQ-->M4
+MQ-->M7
+MQ-->MA
+MQ-->MD
+MQ-->MG
+MQ-->MJ
+MQ-->MM
+MQ-->MN
+MQ-->MP
+MS-->M1
+MS-->M4
+MS-->M7
+MS-->MA
+MS-->MD
+MS-->MG
+MS-->MJ
+MS-->MP
+MW-->4H
+MY-->4H
+N0-->4H
+N2-->4H
+N4-->4H
+N6-->4H
+N8-->9P
+N9-->MW
+N9-->MY
+N9-->N0
+N9-->N2
+N9-->N4
+N9-->N6
+N9-->N8
+N9-->NB
+N9-->NC
+N9-->NE
+NC-->MW
+NC-->MY
+NC-->N0
+NC-->N2
+NC-->N4
+NC-->N6
+NC-->N8
+NC-->NE
+NE-->N4
+NE-->4H

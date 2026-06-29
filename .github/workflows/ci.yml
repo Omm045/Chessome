@@ -1,0 +1,97 @@
+name: CI / CD Architecture Guardian
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  validate:
+    name: Validate Codebase & Architecture
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9.0.0
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - name: Cache pnpm store
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Generate Prisma Client
+        run: pnpm --filter @chessome/database run db:generate
+
+      - name: Commit Message Validation
+        run: npx commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }} --verbose
+        if: github.event_name == 'pull_request'
+
+      - name: Typecheck
+        run: pnpm run typecheck
+
+      - name: ESLint
+        run: pnpm run lint
+
+      - name: Prettier (Check Only)
+        run: npx prettier --check .
+
+      - name: Build All Workspaces
+        run: pnpm run build
+
+      - name: Run Unit Tests
+        run: pnpm run test --if-present
+
+      - name: Run Integration Tests
+        run: pnpm run test:integration --if-present
+
+      - name: Dependency Graph & Boundary Validation
+        run: npx depcruise packages apps --config .dependency-cruiser.js
+
+      - name: Dead Code Detection
+        run: echo "Dead code detection (e.g. ts-prune) will run here."
+
+      - name: Unused Dependency Detection
+        run: echo "Unused dependency detection will run here."
+
+      - name: Bundle Budget Validation
+        run: echo "Bundle budget analysis for apps/web will run here."
+
+      - name: License Audit
+        run: npx license-checker --summary --failOn "GPL;AGPL"
+
+      - name: Security & Secret Audit
+        uses: trufflesecurity/trufflehog@main
+
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-artifacts
+          path: |
+            apps/**/.next
+            apps/**/dist
+            packages/**/dist

@@ -1,0 +1,21 @@
+Koivisto 9.0 by Kim Kämpe and Finn Eggers
+uci
+id name Koivisto 9.0
+id author Kim Kämpe and Finn Eggers
+option name Hash type spin default 16 min 1 max 1048576
+option name Clear Hash type button
+option name Threads type spin default 1 min 1 max 256
+option name MultiPV type spin default 1 min 1 max 256
+option name SyzygyPath type string default <empty>
+option name SyzygyProbeDepth type spin default 1 min 1 max 100
+option name Syzygy50MoveRule type check default true
+option name SyzygyProbeLimit type spin default 7 min 0 max 7
+uciok
+isready
+readyok
+position startpos
+go movetime 100
+info depth 1 seldepth 1 multipv 1 score cp 12 nodes 21 nps 21000 tbhits 0 time 1 pv e2e4
+info depth 2 seldepth 2 multipv 1 score cp 25 nodes 87 nps 87000 tbhits 0 time 1 pv e2e4 c7c5
+info depth 3 seldepth 3 multipv 1 score cp 18 nodes 314 nps 314000 tbhits 0 time 1 pv e2e4 c7c5 g1f3
+bestmove e2e4 ponder c7c5

@@ -1,0 +1,36 @@
+{
+  "name": "chessome-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "typecheck": "turbo run typecheck",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^21.1.0",
+    "@commitlint/config-conventional": "^21.1.0",
+    "@typescript-eslint/eslint-plugin": "^8.62.0",
+    "@typescript-eslint/parser": "^8.62.0",
+    "dependency-cruiser": "^18.0.0",
+    "eslint": "8.57.0",
+    "eslint-config-prettier": "^10.1.8",
+    "husky": "^9.1.7",
+    "license-checker": "^25.0.1",
+    "lint-staged": "^15.3.0",
+    "prettier": "^3.9.0",
+    "turbo": "2.10.0",
+    "typescript": "^5.4.5"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": []
+  },
+  "packageManager": "pnpm@9.0.0",
+  "lint-staged": {
+    "*.ts": "eslint --fix",
+    "*.{ts,js,json,md}": "prettier --write"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "name": "@chessome/database",
+  "version": "1.0.0",
+  "private": true,
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "lint": "eslint \"src/**/*.ts\"",
+    "typecheck": "tsc --noEmit",
+    "db:generate": "prisma generate",
+    "db:push": "prisma db push"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.15.0",
+    "@chessome/core": "workspace:*",
+    "@chessome/shared": "workspace:*",
+    "@chessome/types": "workspace:*"
+  },
+  "devDependencies": {
+    "@chessome/config": "workspace:*",
+    "@types/node": "^20.0.0",
+    "eslint": "8.57.0",
+    "prisma": "^5.15.0",
+    "typescript": "^5.0.0"
+  }
+}

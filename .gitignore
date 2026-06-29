@@ -1,0 +1,14 @@
+node_modules
+.next
+.turbo
+dist
+build
+coverage
+.env
+.env.local
+.DS_Store
+packages/engine/bin
+
+# TypeScript Build Caches
+*.tsbuildinfo
+
