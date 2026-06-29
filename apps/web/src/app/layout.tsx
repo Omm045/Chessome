@@ -1,15 +1,37 @@
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
 import './globals.css';
-import { ReactNode } from 'react';
+import { QueryProvider } from '../providers/QueryProvider';
+import { ThemeProvider } from '../providers/ThemeProvider';
+import { AppLayout } from '../components/layout/AppLayout';
 
-export const metadata = {
-  title: 'Chessome',
-  description: 'Open-source chess analysis platform',
+const inter = Inter({ 
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
+});
+
+export const metadata: Metadata = {
+  title: 'Chessome | Premium Analysis',
+  description: 'The world\'s most powerful open-source chess analysis platform.',
 };
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${inter.variable}`}>
+        <QueryProvider>
+          <ThemeProvider>
+            <AppLayout>
+              {children}
+            </AppLayout>
+          </ThemeProvider>
+        </QueryProvider>
+      </body>
     </html>
   );
 }
