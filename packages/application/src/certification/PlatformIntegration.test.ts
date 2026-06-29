@@ -15,13 +15,71 @@ class MockRegistry extends EngineRegistry {
   }
 }
 
+// Mock pool to avoid needing a real Stockfish binary
+class MockEnginePool {
+  private warmInstances: any[] = [];
+
+  async leaseSession(pluginId: string): Promise<any> {
+    if (this.warmInstances.length > 0) {
+      return this.warmInstances.pop();
+    }
+
+    let messageCb: any;
+    let errorCb: any;
+    let isDead = false;
+    const processMock = {
+      transport: {
+        process: {
+          kill: (signal: string) => {
+            isDead = true;
+            if (errorCb) errorCb(new Error(`Killed with ${signal}`));
+          }
+        },
+        send: async (cmd: string) => {
+          if (isDead) throw new Error('Transport not connected');
+          if (cmd.startsWith('go')) {
+            setTimeout(() => {
+              if (messageCb && !isDead) {
+                messageCb('info depth 5 score cp 100 pv e2e4');
+                messageCb('bestmove e2e4');
+              }
+            }, 10);
+          }
+        },
+        onMessage: (cb: any) => { messageCb = cb; },
+        onError: (cb: any) => { errorCb = cb; }
+      },
+      kill: async () => { isDead = true; },
+      spawn: async () => {},
+      restart: async () => { isDead = false; }
+    };
+
+    const leased = {
+      id: `mock-session-${Date.now()}-${Math.random()}`,
+      pluginId,
+      state: 'leased',
+      sendCommand: processMock.transport.send,
+      cancel: async () => {},
+      release: () => {
+        this.warmInstances.push(leased);
+      },
+      transport: processMock.transport,
+      process: processMock
+    };
+
+    return leased;
+  }
+  
+  getMetrics() { return {}; }
+}
+
 describe('Platform Integration Certification (Task 2.13.5)', () => {
   let runtime: EngineRuntime;
 
   beforeAll(async () => {
-    const pool = new EnginePool({ minInstances: 1, maxInstances: 5, idleTimeoutMs: 10000, warmCount: 1 });
+    const pool = new MockEnginePool();
     const registry = new MockRegistry();
-    runtime = new EngineRuntime(registry, {} as any, pool);
+    runtime = new EngineRuntime(registry, {} as any, pool as any);
   });
 
   afterAll(async () => {
