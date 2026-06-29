@@ -1,4 +1,4 @@
-import { IMessageBus } from '@chessome/core';
+import { IMessageBus } from '@chessome/ports';
 
 export class MessageBusContract {
   constructor(private readonly bus: IMessageBus) {}

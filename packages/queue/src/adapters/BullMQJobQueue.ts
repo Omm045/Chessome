@@ -1,5 +1,5 @@
 import { Queue } from 'bullmq';
-import { IJobQueue, JobConfig, IJobEnvelope } from '@chessome/core';
+import { IJobQueue, JobConfig, IJobEnvelope } from '@chessome/ports';
 import { InfrastructureError } from '@chessome/shared';
 
 export class BullMQJobQueue<T extends IJobEnvelope> implements IJobQueue<T> {

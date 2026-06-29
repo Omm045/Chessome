@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { EventNames } from '@chessome/types';
+import { EventNames } from '@chessome/events';
 
 export const EventNamesSchema = z.nativeEnum(EventNames);
 

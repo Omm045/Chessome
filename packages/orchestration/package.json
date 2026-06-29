@@ -12,8 +12,9 @@
   },
   "dependencies": {
     "@chessome/core": "workspace:*",
-    "@chessome/shared": "workspace:*",
-    "@chessome/events": "workspace:*"
+    "@chessome/events": "workspace:*",
+    "@chessome/ports": "workspace:*",
+    "@chessome/shared": "workspace:*"
   },
   "devDependencies": {
     "@chessome/config": "workspace:*",

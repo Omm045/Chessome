@@ -1,4 +1,4 @@
-import { IJobEnvelope, IDistributedLock } from '@chessome/core';
+import { IJobEnvelope, IDistributedLock } from '@chessome/ports';
 import { BaseHandler } from './BaseHandler';
 
 export interface WorkerContext {
@@ -22,6 +22,7 @@ export abstract class BaseWorker<TRequest, TResponse> {
    */
   protected async processJob(envelope: IJobEnvelope<TRequest>): Promise<void> {
     const startTime = Date.now();
+    let lockAcquired = false;
     try {
       this.emit('Started', envelope);
 
@@ -32,6 +33,7 @@ export abstract class BaseWorker<TRequest, TResponse> {
           // If already locked, depending on use case we might skip or retry. We skip as deduplicated.
           return;
         }
+        lockAcquired = true;
       }
 
       if (this.handler.preProcess) {
@@ -52,7 +54,7 @@ export abstract class BaseWorker<TRequest, TResponse> {
       }
       throw error; // Let the underlying Queue adapter (BullMQ) handle retry/DLQ based on JobConfig
     } finally {
-      if (this.lock && envelope.deduplicationKey) {
+      if (this.lock && envelope.deduplicationKey && lockAcquired) {
         await this.lock.release(envelope.deduplicationKey);
       }
     }

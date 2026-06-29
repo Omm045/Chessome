@@ -8,3 +8,5 @@ export interface IEngineProcess {
   kill(): Promise<void>;
   restart(): Promise<void>;
 }
+
+export * from './EngineProcess';

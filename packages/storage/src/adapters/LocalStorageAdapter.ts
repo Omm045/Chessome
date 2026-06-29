@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as fsp from 'fs/promises';
 import * as path from 'path';
-import { IObjectStorage, ObjectId, StorageVersion, StorageMetadata, ObjectMetadata } from '@chessome/core';
+import { IObjectStorage, ObjectId, StorageVersion, StorageMetadata, ObjectMetadata } from '@chessome/ports';
 import { Result, ok, err, InfrastructureError, NotFoundError } from '@chessome/shared';
 
 export class LocalStorageAdapter implements IObjectStorage {

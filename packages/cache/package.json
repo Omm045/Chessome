@@ -11,9 +11,9 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@chessome/core": "workspace:*",
+    "@chessome/ports": "workspace:*",
     "@chessome/shared": "workspace:*",
-    "ioredis": "^5.3.2"
+    "ioredis": "^5.4.1"
   },
   "devDependencies": {
     "@chessome/config": "workspace:*",

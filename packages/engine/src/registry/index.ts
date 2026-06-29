@@ -16,3 +16,51 @@ export interface IEngineRegistry {
   getHealth(pluginId: string): EngineHealthInfo | undefined;
   listPlugins(): IEnginePlugin[];
 }
+
+export class EngineRegistry implements IEngineRegistry {
+  private readonly plugins = new Map<string, IEnginePlugin>();
+
+  async discover(plugins: IEnginePlugin[]): Promise<void> {
+    for (const plugin of plugins) {
+      this.register(plugin);
+    }
+  }
+
+  register(plugin: IEnginePlugin): void {
+    const manifest = plugin.manifest;
+    this.plugins.set(manifest.engineId, plugin);
+  }
+
+  unregister(pluginId: string): void {
+    this.plugins.delete(pluginId);
+  }
+
+  resolve(pluginId: string): IEnginePlugin | undefined {
+    return this.plugins.get(pluginId);
+  }
+
+  resolveByCapability(requirements: Partial<IEngineCapabilityModel>): IEnginePlugin[] {
+    const results: IEnginePlugin[] = [];
+    for (const plugin of this.plugins.values()) {
+      const manifest = plugin.manifest;
+      if (requirements.name && manifest.name !== requirements.name) continue;
+      results.push(plugin);
+    }
+    return results;
+  }
+
+  getHealth(pluginId: string): EngineHealthInfo | undefined {
+    const plugin = this.plugins.get(pluginId);
+    if (!plugin) return undefined;
+    
+    return {
+      status: 'Ready',
+      restartCount: 0
+    };
+  }
+
+  listPlugins(): IEnginePlugin[] {
+    return Array.from(this.plugins.values());
+  }
+}
+

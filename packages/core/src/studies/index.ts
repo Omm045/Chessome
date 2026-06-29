@@ -1,5 +1,4 @@
 import { ValidationError, Result, ok, Brand } from '@chessome/shared';
-import { FenString } from '../chess';
 
 export type StudyId = Brand<string, 'StudyId'>;
 export type NodeId = Brand<string, 'NodeId'>;
@@ -7,12 +6,12 @@ export type NodeId = Brand<string, 'NodeId'>;
 export class StudyNode {
   private constructor(
     public readonly id: NodeId,
-    public readonly fen: FenString,
+    public readonly fen: string,
     public readonly moveFromParent: string | null,
     public readonly parentId: NodeId | null
   ) {}
 
-  public static create(id: NodeId, fen: FenString, moveFromParent: string | null, parentId: NodeId | null): Result<StudyNode, ValidationError> {
+  public static create(id: NodeId, fen: string, moveFromParent: string | null, parentId: NodeId | null): Result<StudyNode, ValidationError> {
     // Invariants regarding root node needing no parent, etc.
     return ok(new StudyNode(id, fen, moveFromParent, parentId));
   }

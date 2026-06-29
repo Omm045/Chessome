@@ -1,4 +1,4 @@
-import { IObjectStorage, ObjectId, StorageVersion } from '@chessome/core';
+import { IObjectStorage, ObjectId, StorageVersion } from '@chessome/ports';
 // Using standard assertion libraries or test runners here eventually
 
 export class StorageContract {

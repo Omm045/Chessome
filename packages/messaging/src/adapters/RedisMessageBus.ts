@@ -1,17 +1,31 @@
 import { Redis } from 'ioredis';
-import { IMessageBus } from '@chessome/core';
+import { IMessageBus } from '@chessome/ports';
 import { InfrastructureError } from '@chessome/shared';
 import { EventSerializer, IEventPayload } from '@chessome/events';
 
 export class RedisMessageBus implements IMessageBus {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private subscriptions = new Map<string, (message: any) => Promise<void>>();
-  private isSubscribed = false;
+  private subscriptions = new Map<string, Set<(message: any) => Promise<void>>>();
 
   constructor(
     private readonly publisher: Redis,
     private readonly subscriber: Redis
-  ) {}
+  ) {
+    this.subscriber.on('message', async (channel, message) => {
+      const handlers = this.subscriptions.get(channel);
+      if (handlers) {
+        try {
+          const parsed = EventSerializer.deserialize<IEventPayload>(message);
+          const promises = Array.from(handlers).map(cb => cb(parsed).catch(err => {
+            console.error(`Error in message handler for topic ${channel}`, err);
+          }));
+          await Promise.all(promises);
+        } catch (err) {
+          console.error(`Error deserializing message for topic ${channel}`, err);
+        }
+      }
+    });
+  }
 
   async publish<T>(topic: string, message: T): Promise<void> {
     try {
@@ -24,24 +38,15 @@ export class RedisMessageBus implements IMessageBus {
 
   async subscribe<T>(topic: string, handler: (message: T) => Promise<void>): Promise<string> {
     try {
-      if (!this.isSubscribed) {
-        this.subscriber.on('message', async (channel, message) => {
-          const cb = this.subscriptions.get(channel);
-          if (cb) {
-            try {
-              const parsed = EventSerializer.deserialize<IEventPayload>(message);
-              await cb(parsed);
-            } catch (err) {
-              console.error(`Error in message handler for topic ${channel}`, err);
-            }
-          }
-        });
-        this.isSubscribed = true;
-      }
-
       await this.subscriber.subscribe(topic);
+      
+      let handlers = this.subscriptions.get(topic);
+      if (!handlers) {
+        handlers = new Set();
+        this.subscriptions.set(topic, handlers);
+      }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      this.subscriptions.set(topic, handler as any);
+      handlers.add(handler as any);
       
       return topic; // using topic as subscription ID for simplicity in this adapter
     } catch (e) {
@@ -60,6 +65,10 @@ export class RedisMessageBus implements IMessageBus {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async ack(_messageId: string): Promise<void> {
-    // Redis Pub/Sub doesn't have acks. This is a no-op here, but future NATS/Kafka adapters will use it.
+    /**
+     * @note Redis Pub/Sub doesn't have native acknowledgements.
+     * This implementation provides AT-MOST-ONCE delivery.
+     * For AT-LEAST-ONCE delivery, consider migrating to Redis Streams (XADD/XREAD).
+     */
   }
 }

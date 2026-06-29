@@ -1,4 +1,5 @@
-import { IUnitOfWork, ITransaction, IMessageBus } from '@chessome/core';
+import { IUnitOfWork, ITransaction } from '@chessome/core';
+import { IMessageBus } from '@chessome/ports';
 import { IEventPayload, EventSerializer } from '@chessome/events';
 
 export interface IOutboxRepository {

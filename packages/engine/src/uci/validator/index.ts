@@ -6,11 +6,12 @@ export class UciValidator {
    * Validate that a parsed response meets basic UCI invariants.
    * Ensures that we don't leak completely malformed structs into the runtime.
    */
-  static validate(response: EngineResponse): void {
+  static validate(response: EngineResponse, strict = true): void {
     if (response.type === 'UNKNOWN') {
-      // In production, we might just log unknown responses instead of throwing.
-      // We throw here for strict protocol compliance mode.
-      throw new EngineParseError(`Received unknown protocol message: ${response.raw}`);
+      if (strict) {
+        throw new EngineParseError(`Received unknown protocol message: ${response.raw}`);
+      }
+      return; // Skip logging here since core logging is an external concern
     }
 
     if (response.type === 'OPTION') {

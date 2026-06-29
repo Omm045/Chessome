@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { Position } from '../position';
+import { FenParser } from '../index';
 import { FenParseError } from '../diagnostic';
 
 describe('Illegal Position Certification', () => {
@@ -7,11 +7,11 @@ describe('Illegal Position Certification', () => {
     const fen = 'KnbqkbnK/pppppppp/8/8/8/8/PPPPPPPP/RNBQ1BNR w KQkq - 0 1';
     
     try {
-      Position.fromFen(fen);
+      FenParser.parse(fen);
       expect.fail('Should have thrown');
-    } catch (e: any) {
-      expect(e).toBeInstanceOf(FenParseError);
-      expect(e.diagnostics[0].message).toContain('exactly 1 white king');
+        } catch (e: unknown) {
+          expect(e).toBeInstanceOf(FenParseError);
+          expect((e as FenParseError).diagnostics[0].message).toContain('exactly 1 white king');
     }
   });
 
@@ -19,11 +19,11 @@ describe('Illegal Position Certification', () => {
     const fen = 'Pnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
     
     try {
-      Position.fromFen(fen);
+      FenParser.parse(fen);
       expect.fail('Should have thrown');
-    } catch (e: any) {
+    } catch (e: unknown) {
       expect(e).toBeInstanceOf(FenParseError);
-      expect(e.diagnostics[0].message).toContain('Pawns cannot be placed on rank');
+      expect((e as FenParseError).diagnostics[0].message).toContain('Pawns cannot be placed on rank');
     }
   });
 });

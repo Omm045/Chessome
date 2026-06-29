@@ -2,6 +2,7 @@ export interface BinaryMetadata {
   readonly version: string;
   readonly url: string;
   readonly sha256: string;
+  readonly signature?: string;
   readonly os: NodeJS.Platform;
   readonly arch: NodeJS.Architecture;
 }

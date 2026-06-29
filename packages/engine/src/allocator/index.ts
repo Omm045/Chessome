@@ -35,3 +35,30 @@ export interface IEngineAllocator {
     affinity?: EngineAffinity
   ): Promise<IEnginePlugin | undefined>;
 }
+
+export class EngineAllocator implements IEngineAllocator {
+  async allocate(
+    registry: IEngineRegistry,
+    requirements: AllocationRequirements,
+    affinity?: EngineAffinity
+  ): Promise<IEnginePlugin | undefined> {
+    if (affinity?.preferredEngineId) {
+      const preferred = registry.resolve(affinity.preferredEngineId);
+      if (preferred) return preferred;
+    }
+
+    const available = registry.listPlugins();
+    
+    // Very basic allocation strategy for now: return the first one that matches basic requirements
+    for (const plugin of available) {
+      const capabilities = plugin.manifest.capabilities;
+      if (requirements.requiresNNUE && !capabilities.supportsNNUE) continue;
+      if (requirements.requiresSyzygy && !capabilities.supportsSyzygy) continue;
+      
+      return plugin;
+    }
+
+    return undefined;
+  }
+}
+

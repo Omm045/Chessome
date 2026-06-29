@@ -26,7 +26,7 @@ export class FieldParsers {
           }
         } else if (/[pnbrqkPNBRQK]/.test(char)) {
           const color: Color = char === char.toLowerCase() ? 'b' : 'w';
-          rank.push({ color, type: char.toLowerCase() as any });
+          rank.push({ color, type: char.toLowerCase() as Piece['type'] });
         } else {
           errors.push({ field: 'PiecePlacement', severity: 'error', message: `Invalid character '${char}' in piece placement` });
         }

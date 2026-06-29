@@ -1,4 +1,4 @@
-import { IJobQueue } from '@chessome/core';
+import { IJobQueue } from '@chessome/ports';
 
 export class QueueContract {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

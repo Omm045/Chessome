@@ -1,4 +1,4 @@
-import { ICache } from '@chessome/core';
+import { ICache } from '@chessome/ports';
 
 export class CacheContract {
   constructor(private readonly cache: ICache) {}

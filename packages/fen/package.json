@@ -11,7 +11,8 @@
   },
   "dependencies": {
     "@chessome/shared": "workspace:*",
-    "@chessome/types": "workspace:*"
+    "@chessome/types": "workspace:*",
+    "@chessome/chess": "workspace:*"
   },
   "devDependencies": {
     "@chessome/config": "workspace:*",

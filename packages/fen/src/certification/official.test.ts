@@ -1,20 +1,20 @@
 import { describe, it, expect } from 'vitest';
-import { Position } from '../position';
+import { FenParser } from '../index';
+import { PieceType } from '@chessome/chess';
 
 describe('Official FEN Certification', () => {
   it('should parse the starting position', () => {
     const startFen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
-    const pos = Position.fromFen(startFen);
+    const pos = FenParser.parse(startFen);
     
-    expect(pos.ast.activeColor).toBe('w');
-    expect(pos.ast.castlingRights.whiteKingSide).toBe(true);
-    expect(pos.ast.castlingRights.blackQueenSide).toBe(true);
-    expect(pos.ast.enPassantTarget).toBeNull();
-    expect(pos.ast.halfmoveClock).toBe(0);
-    expect(pos.ast.fullmoveNumber).toBe(1);
+    expect(pos.sideToMove).toBe('White');
+    expect(pos.castlingRights.whiteKingside).toBe(true);
+    expect(pos.castlingRights.blackQueenside).toBe(true);
+    expect(pos.enPassant).toBeNull();
+    expect(pos.halfmoveClock).toBe(0);
+    expect(pos.fullmoveNumber).toBe(1);
     
-    expect(pos.pieceCount('w', 'k')).toBe(1);
-    expect(pos.pieceCount('b', 'p')).toBe(8);
-    expect(pos.materialBalance()).toBe(0);
+    expect(pos.board.getPieceAt(4)?.type).toBe(PieceType.King);
+    expect(pos.board.getPieceAt(4)?.color).toBe('White');
   });
 });

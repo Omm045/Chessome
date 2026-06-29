@@ -1,6 +1,13 @@
 export enum EventNames {
   GAME_IMPORTED = 'game.imported',
+  GAME_SYNCED = 'game.synced',
+  ANALYSIS_QUEUED = 'analysis.queued',
+  ANALYSIS_STARTED = 'analysis.started',
+  EVALUATION_PRODUCED = 'evaluation.produced',
   ANALYSIS_COMPLETED = 'analysis.completed',
+  JOB_CANCELLED = 'job.cancelled',
+  WORKER_OFFLINE = 'worker.offline',
+  WORKER_RECOVERED = 'worker.recovered',
   ENGINE_ERROR = 'engine.error'
 }
 

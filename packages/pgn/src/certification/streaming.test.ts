@@ -31,6 +31,7 @@ describe('Streaming Certification', () => {
     
     const startTime = performance.now();
     let count = 0;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     for await (const _ of PgnGameSplitter.split(largeSyntheticStream())) {
       count++;
     }

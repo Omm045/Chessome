@@ -1,11 +1,10 @@
 import { Game as PrismaGame, GameResult as PrismaGameResult } from '@prisma/client';
-import { Game as CoreGame, FenString } from '@chessome/core';
-import { GameId, Result, err } from '@chessome/shared';
+import { Game as CoreGame } from '@chessome/core';
+import { GameId, Result } from '@chessome/shared';
 
 export class GameMapper {
   static toDomain(prismaGame: PrismaGame): Result<CoreGame, Error> {
-    const fenResult = FenString.create(prismaGame.initialFen);
-    if (!fenResult.isOk) return err(fenResult.error);
+    const fenStr = prismaGame.initialFen;
 
     let domainResultStr = '*';
     if (prismaGame.result === PrismaGameResult.WHITE_WIN) domainResultStr = '1-0';
@@ -20,7 +19,7 @@ export class GameMapper {
         date: prismaGame.date.toISOString(),
         result: domainResultStr,
       },
-      fenResult.value
+      fenStr
     );
   }
 
@@ -36,7 +35,7 @@ export class GameMapper {
       black: coreGame.metadata.black || 'Unknown',
       date: coreGame.metadata.date ? new Date(coreGame.metadata.date) : new Date(),
       result: prismaResult,
-      initialFen: coreGame.currentFen.value,
+      initialFen: coreGame.currentFen,
       pgnText: '', // This would typically be passed in or constructed from move history
       moveCount: coreGame.moveCount,
     };

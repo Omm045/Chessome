@@ -40,7 +40,7 @@ export class PgnGameSplitter {
     // Since we just need to isolate game text for the parser, splitting on `\n\n[` or `\n[` is common.
     // For safety, let's search for `[Event ` that is not at the start of the string.
     
-    const eventTagIndex = buffer.indexOf('[Event ', 1);
+
     
     // There are edge cases where [Event is inside a comment, but it's very rare at the start of a line.
     // A robust heuristic: `\n[Event `

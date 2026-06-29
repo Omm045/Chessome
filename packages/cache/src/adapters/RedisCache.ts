@@ -1,5 +1,5 @@
 import { Redis } from 'ioredis';
-import { ICache } from '@chessome/core';
+import { ICache } from '@chessome/ports';
 import { InfrastructureError } from '@chessome/shared';
 
 export class RedisCache implements ICache {

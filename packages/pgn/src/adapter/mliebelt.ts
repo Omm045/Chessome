@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { parse } from '@mliebelt/pgn-parser';
 import { GameNode, MoveNode, TagNode, CommentNode, NagNode, VariationNode, ResultNode } from '../ast';
 import { PgnParseError } from '../diagnostic';

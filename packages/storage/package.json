@@ -11,7 +11,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@chessome/core": "workspace:*",
+    "@chessome/ports": "workspace:*",
     "@chessome/shared": "workspace:*"
   },
   "devDependencies": {
