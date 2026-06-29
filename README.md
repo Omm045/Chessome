@@ -8,6 +8,7 @@ See `ARCHITECTURE.md` and `ARCHITECTURE_LOCK.md` for full architectural details.
 ## Quick Start
 ```bash
 pnpm install
+pnpm --filter @chessome/database run db:generate
 pnpm build
 pnpm test
 ```
