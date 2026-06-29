@@ -3,6 +3,7 @@ import { IEngineSession } from '../sessions';
 import { IEngineRegistry } from '../registry';
 import { IEngineScheduler } from '../scheduler';
 import { IEngineMetrics } from '../metrics';
+import { UciDecoder } from '../uci/decoder';
 
 export interface IEngineRuntime {
   readonly registry: IEngineRegistry;
@@ -39,7 +40,6 @@ export class EngineRuntime implements IEngineRuntime {
     const session = new EngineSession(leased.id, events as any, leased.process);
     
     // We should also hook up the decoder
-    const { UciDecoder } = require('../uci/decoder');
     leased.transport.onMessage((line: string) => {
       const response = UciDecoder.decode(line);
       if (response.type === 'INFO' && response.metrics) {

@@ -2,7 +2,9 @@
 import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 import { AnalysisSession, AnalysisCoordinator, EngineExecutor, PositionProvider, ResultAggregator } from '../analysis';
 import { ReplayIterator, createMove, makeSquare } from '@chessome/chess';
-import { EngineRuntime, EnginePool, EngineRegistry } from '@chessome/engine';
+import { EngineRuntime } from '@chessome/engine/src/runtime';
+import { EnginePool } from '@chessome/engine/src/pool';
+import { EngineRegistry } from '@chessome/engine/src/registry';
 import { FenParser } from '@chessome/fen';
 
 // Mock registry

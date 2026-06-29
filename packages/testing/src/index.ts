@@ -6,3 +6,8 @@ export * from './matchers';
 export * from './mocks';
 export * from './helpers';
 export * from './setup';
+export * from './contracts/GameRepositoryContract';
+export * from './contracts/CacheContract';
+export * from './contracts/QueueContract';
+export * from './contracts/MessageBusContract';
+export * from './contracts/StorageContract';

@@ -52,8 +52,5 @@ export class FenParser {
 }
 
 export * from './ast';
-export * from './tokenizer';
-export * from './parser';
-export * from './semantic';
 export * from './mapper/PositionMapper';
 export * from './diagnostic';

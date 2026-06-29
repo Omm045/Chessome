@@ -1,2 +1,2 @@
-export * from './adapters/BullMQJobQueue';
-export * from './tests/contracts/QueueContract';
+// Infrastructure interfaces are exported via @chessome/ports
+// Queue concrete implementations are intentionally not exported here to enforce Hexagonal Architecture boundaries.

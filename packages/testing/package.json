@@ -13,7 +13,9 @@
   "dependencies": {
     "@chessome/shared": "workspace:*",
     "@chessome/types": "workspace:*",
-    "@chessome/validation": "workspace:*"
+    "@chessome/validation": "workspace:*",
+    "@chessome/ports": "workspace:*",
+    "@chessome/core": "workspace:*"
   },
   "devDependencies": {
     "@chessome/config": "workspace:*",
