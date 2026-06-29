@@ -15,6 +15,7 @@
   "dependencies": {
     "@prisma/client": "^5.15.0",
     "@chessome/core": "workspace:*",
+    "@chessome/ports": "workspace:*",
     "@chessome/shared": "workspace:*",
     "@chessome/types": "workspace:*"
   },

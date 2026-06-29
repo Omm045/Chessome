@@ -15,5 +15,17 @@ export const apiClient = {
     }
 
     return res.json();
+  },
+
+  async getHealth(): Promise<Record<string, unknown>> {
+    const res = await fetch('/api/health', {
+      method: 'GET',
+    });
+
+    if (!res.ok) {
+      throw new Error('Failed to fetch health status');
+    }
+
+    return res.json();
   }
 };

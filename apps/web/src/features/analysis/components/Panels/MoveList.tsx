@@ -1,11 +1,18 @@
 import React, { useEffect, useRef } from 'react';
+import { useShallow } from 'zustand/react/shallow';
 import { useAnalysisStore } from '../../store/analysisStore';
-import { Panel } from '../../../../components/ui/Panel';
 import { FileClock } from 'lucide-react';
 import { PositionCompletedEventDto } from '@chessome/types';
 
 export function MoveList() {
-  const { currentPly, scrubPly, setScrubPly, evaluations } = useAnalysisStore();
+  const { currentPly, scrubPly, setScrubPly, evaluations } = useAnalysisStore(
+    useShallow((state) => ({
+      currentPly: state.currentPly,
+      scrubPly: state.scrubPly,
+      setScrubPly: state.setScrubPly,
+      evaluations: state.evaluations
+    }))
+  );
   const activeMoveRef = useRef<HTMLButtonElement>(null);
 
   const activePly = scrubPly ?? currentPly;
@@ -21,21 +28,21 @@ export function MoveList() {
   const moves = Array.from({ length: currentPly }, (_, i) => i + 1);
 
   return (
-    <Panel padding="none" style={{ display: 'flex', flexDirection: 'column', height: '100%', overflow: 'hidden' }}>
-      <div style={{ padding: '0.75rem 1rem', borderBottom: '1px solid var(--border-color)', display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 600 }}>
-        <FileClock size={18} />
+    <div className="flex h-full flex-col overflow-hidden rounded-xl border border-gray-800 bg-gray-900/50 shadow-sm">
+      <div className="flex items-center gap-2 border-b border-gray-800 bg-gray-900/80 px-4 py-3 text-sm font-semibold text-gray-200">
+        <FileClock size={16} className="text-gray-400" />
         <span>Game Record</span>
       </div>
       
-      <div style={{ flex: 1, overflowY: 'auto', padding: '0.5rem' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '30px 1fr 1fr', gap: '0.25rem', fontSize: '0.9rem' }}>
+      <div className="flex-1 overflow-y-auto p-2 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-gray-800 hover:scrollbar-thumb-gray-700">
+        <div className="grid grid-cols-[36px_1fr_1fr] gap-x-2 gap-y-1 text-[13px]">
           {moves.map((ply) => {
             if (ply % 2 === 0) return null; // Only render on White's turn (odd plies)
             const moveNum = Math.ceil(ply / 2);
             
             return (
               <React.Fragment key={moveNum}>
-                <div style={{ color: 'var(--text-secondary)', textAlign: 'right', paddingRight: '0.5rem', alignSelf: 'center' }}>
+                <div className="flex items-center justify-end pr-2 font-mono text-gray-500">
                   {moveNum}.
                 </div>
                 
@@ -61,46 +68,39 @@ export function MoveList() {
           })}
         </div>
       </div>
-    </Panel>
+    </div>
   );
 }
 
 const MoveButton = React.forwardRef<HTMLButtonElement, { ply: number, isActive: boolean, evalData: PositionCompletedEventDto | undefined, onClick: () => void }>(
   ({ ply, isActive, evalData, onClick }, ref) => {
-  // Determine icon/color based on classification
-  let color = 'inherit';
-  if (evalData?.classification === 'blunder') color = 'var(--eval-blunder)';
-  else if (evalData?.classification === 'mistake') color = 'var(--eval-mistake)';
-  else if (evalData?.classification === 'inaccuracy') color = 'var(--eval-inaccuracy)';
-  else if (evalData?.classification === 'good') color = 'var(--eval-good)';
-  else if (evalData?.classification === 'brilliant') color = 'var(--eval-brilliant)';
+  
+  // Determine text color class based on classification
+  let colorClass = 'text-gray-400';
+  if (evalData?.classification === 'blunder') colorClass = 'text-red-500';
+  else if (evalData?.classification === 'mistake') colorClass = 'text-orange-500';
+  else if (evalData?.classification === 'inaccuracy') colorClass = 'text-yellow-500';
+  else if (evalData?.classification === 'good') colorClass = 'text-green-500';
+  else if (evalData?.classification === 'brilliant') colorClass = 'text-cyan-400';
 
   return (
     <button
       ref={ref}
       onClick={onClick}
-      style={{
-        background: isActive ? 'var(--bg-secondary)' : 'transparent',
-        border: 'none',
-        padding: '0.25rem 0.5rem',
-        borderRadius: 'var(--radius-sm)',
-        color: isActive ? 'var(--text-primary)' : 'var(--text-secondary)',
-        cursor: 'pointer',
-        textAlign: 'left',
-        fontWeight: isActive ? 600 : 400,
-        display: 'flex',
-        justifyContent: 'space-between',
-        transition: 'background-color 0.1s'
-      }}
-      onMouseOver={(e) => { if(!isActive) e.currentTarget.style.backgroundColor = 'var(--bg-secondary)'; }}
-      onMouseOut={(e) => { if(!isActive) e.currentTarget.style.backgroundColor = 'transparent'; }}
+      className={`group flex items-center justify-between rounded px-2 py-1 transition-all ${
+        isActive 
+          ? 'bg-blue-600/20 font-semibold text-blue-400' 
+          : 'hover:bg-gray-800 text-gray-300'
+      }`}
     >
-      <span>{evalData?.san || `Move ${ply}`}</span>
+      <span className="font-mono">{evalData?.san || `Move ${ply}`}</span>
       {evalData?.classification && (
-        <span style={{ color, fontWeight: 800 }}>
+        <span className={`font-bold ${colorClass}`}>
           {evalData.classification === 'blunder' ? '??' : evalData.classification === 'brilliant' ? '!!' : evalData.classification === 'mistake' ? '?' : '!'}
         </span>
       )}
     </button>
   );
 });
+
+MoveButton.displayName = 'MoveButton';

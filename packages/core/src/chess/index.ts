@@ -5,6 +5,8 @@ import { ITransaction } from '../shared';
 
 
 export class Game {
+  public userId: string | null = null;
+
   private constructor(
     public readonly id: GameId,
     public readonly metadata: GameMetadata,
@@ -25,6 +27,10 @@ export class Game {
   
   public get moveHistory(): readonly string[] {
     return this.moves;
+  }
+
+  public attachToUser(userId: string): void {
+    this.userId = userId;
   }
 }
 

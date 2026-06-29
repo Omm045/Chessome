@@ -18,10 +18,12 @@
     "@chessome/fen": "workspace:*",
     "@chessome/ports": "workspace:*",
     "@chessome/shared": "workspace:*",
-    "@chessome/types": "workspace:*"
+    "@chessome/types": "workspace:*",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@chessome/config": "workspace:*",
+    "@types/uuid": "^9.0.0",
     "eslint": "8.57.0",
     "typescript": "^5.0.0",
     "vitest": "^1.6.0"

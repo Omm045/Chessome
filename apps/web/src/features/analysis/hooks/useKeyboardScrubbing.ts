@@ -23,6 +23,12 @@ export function useKeyboardScrubbing() {
         if (active < currentPly) {
           setScrubPly(active + 1);
         }
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        setScrubPly(0);
+      } else if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        setScrubPly(currentPly);
       }
     };
 

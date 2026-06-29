@@ -31,5 +31,6 @@ export interface GameMetadata {
   date: string;
   result: string;
   eco?: string;
+  opening?: string;
   event?: string;
 }

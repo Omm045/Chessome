@@ -11,16 +11,24 @@ export class GameMapper {
     if (prismaGame.result === PrismaGameResult.BLACK_WIN) domainResultStr = '0-1';
     if (prismaGame.result === PrismaGameResult.DRAW) domainResultStr = '1/2-1/2';
 
-    return CoreGame.create(
+    const gameResult = CoreGame.create(
       prismaGame.id as GameId,
       {
         white: prismaGame.white,
         black: prismaGame.black,
         date: prismaGame.date.toISOString(),
         result: domainResultStr,
+        eco: prismaGame.eco || undefined,
+        opening: prismaGame.opening || undefined,
       },
       fenStr
     );
+
+    if (gameResult.isOk && prismaGame.userId) {
+      gameResult.value.attachToUser(prismaGame.userId);
+    }
+
+    return gameResult;
   }
 
   static toPersistence(coreGame: CoreGame): Omit<PrismaGame, 'createdAt' | 'deletedAt'> {
@@ -31,13 +39,16 @@ export class GameMapper {
 
     return {
       id: coreGame.id,
+      userId: coreGame.userId,
       white: coreGame.metadata.white || 'Unknown',
       black: coreGame.metadata.black || 'Unknown',
       date: coreGame.metadata.date ? new Date(coreGame.metadata.date) : new Date(),
       result: prismaResult,
       initialFen: coreGame.currentFen,
-      pgnText: '', // This would typically be passed in or constructed from move history
+      pgnText: '', // This should ideally be stored in CoreGame, but for now empty
       moveCount: coreGame.moveCount,
+      eco: coreGame.metadata.eco || null,
+      opening: coreGame.metadata.opening || null,
     };
   }
 }

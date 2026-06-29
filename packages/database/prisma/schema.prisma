@@ -34,8 +34,53 @@ enum OutboxEventStatus {
   FAILED
 }
 
+// Identity Enums
+enum AuthProvider {
+  SUPABASE
+  CHESSCOM
+  LICHESS
+}
+
+enum UserRole {
+  USER
+  MODERATOR
+  ADMIN
+}
+
+enum UserStatus {
+  ACTIVE
+  SUSPENDED
+  DELETED
+}
+
+enum Theme {
+  DARK
+  LIGHT
+  SYSTEM
+}
+
+enum BoardTheme {
+  DEFAULT
+  GREEN
+  WOOD
+}
+
+enum EvalDisplay {
+  GRAPH
+  BAR
+  NONE
+}
+
+enum AnalysisType {
+  GAME
+  POSITION
+  PUZZLE
+  STUDY
+}
+
 model Game {
   id          String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId      String?      @map("user_id") @db.Uuid
   white       String       @db.VarChar
   black       String       @db.VarChar
   date        DateTime     @db.Date
@@ -43,10 +88,14 @@ model Game {
   initialFen  String       @map("initial_fen") @db.VarChar
   pgnText     String       @map("pgn_text") @db.Text
   moveCount   Int          @map("move_count")
+  eco         String?      @db.VarChar
+  opening     String?      @db.VarChar
   createdAt   DateTime     @default(now()) @map("created_at") @db.Timestamptz
   deletedAt   DateTime?    @map("deleted_at") @db.Timestamptz
 
+  user        User?        @relation(fields: [userId], references: [id], onDelete: SetNull)
   analysisJobs AnalysisJob[]
+  sessions    AnalysisSession[]
 
   @@index([white, black], name: "idx_games_players")
   @@index([createdAt], name: "idx_games_created_at")
@@ -108,4 +157,117 @@ model ProcessedJob {
 
   @@unique([jobId, workerName], name: "idx_processed_jobs_unique")
   @@map("processed_jobs")
+}
+
+// --- Identity & User Platform ---
+
+model User {
+  id              String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  authProvider    AuthProvider @map("auth_provider")
+  authProviderId  String       @map("auth_provider_id")
+  email           String?      @db.VarChar
+  emailVerified   Boolean      @default(false) @map("email_verified")
+  username        String?      @unique @db.VarChar
+  displayName     String?      @map("display_name") @db.VarChar
+  avatarUrl       String?      @map("avatar_url") @db.Text
+  role            UserRole     @default(USER)
+  status          UserStatus   @default(ACTIVE)
+  
+  createdAt       DateTime     @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt       DateTime     @updatedAt @map("updated_at") @db.Timestamptz
+
+  preferences     UserPreferences?
+  statistics      UserStatistics?
+  games           Game[]
+  sessions        AnalysisSession[]
+  feedback        UserFeedback[]
+
+  @@unique([authProvider, authProviderId], name: "idx_users_provider")
+  @@map("users")
+}
+
+model UserPreferences {
+  id                String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId            String      @unique @map("user_id") @db.Uuid
+  preferencesVersion Int        @default(1) @map("preferences_version")
+  
+  theme             Theme       @default(DARK)
+  boardTheme        BoardTheme  @default(DEFAULT) @map("board_theme")
+  pieceTheme        String      @default("default") @map("piece_theme")
+  
+  engineDepth       Int         @default(18) @map("engine_depth")
+  multiPv           Int         @default(1) @map("multi_pv")
+  preferredEngine   String      @default("stockfish") @map("preferred_engine")
+  
+  evalDisplay       EvalDisplay @default(GRAPH) @map("eval_display")
+  animationSpeed    String      @default("normal") @map("animation_speed")
+  keyboardShortcuts Boolean     @default(true) @map("keyboard_shortcuts")
+  
+  user              User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("user_preferences")
+}
+
+model UserStatistics {
+  id                String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId            String   @unique @map("user_id") @db.Uuid
+  
+  totalAnalyses     Int      @default(0) @map("total_analyses")
+  totalGames        Int      @default(0) @map("total_games")
+  averageAccuracy   Float?   @map("average_accuracy")
+  hoursAnalyzed     Float    @default(0.0) @map("hours_analyzed")
+  lastActive        DateTime @default(now()) @map("last_active") @db.Timestamptz
+  
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("user_statistics")
+}
+
+model UserFeedback {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId    String?  @map("user_id") @db.Uuid
+  category  String   @db.VarChar
+  message   String   @db.Text
+  metadata  Json?
+  status    String   @default("open") @db.VarChar
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz
+
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@map("user_feedback")
+}
+
+model AnalysisSession {
+  id              String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId          String       @map("user_id") @db.Uuid
+  gameId          String       @map("game_id") @db.Uuid
+  
+  title           String?      @db.VarChar
+  category        String       @default("recent") 
+  isShared        Boolean      @default(false) @map("is_shared")
+  
+  analysisType    AnalysisType @default(GAME) @map("analysis_type")
+  engineVersion   String       @default("stockfish_16.1") @map("engine_version")
+  engineDepth     Int          @default(18) @map("engine_depth")
+  status          String       @default("completed") // ongoing, completed
+  accuracy        Float?       @map("accuracy")
+  
+  lastOpened      DateTime     @default(now()) @map("last_opened") @db.Timestamptz
+  lastViewedAt    DateTime     @default(now()) @map("last_viewed_at") @db.Timestamptz
+  viewCount       Int          @default(0) @map("view_count")
+  isFavorite      Boolean      @default(false) @map("is_favorite")
+  tags            String[]     @default([])
+  notes           String?      @db.Text
+  collection      String?      @db.VarChar
+  isArchived      Boolean      @default(false) @map("is_archived")
+  isTrash         Boolean      @default(false) @map("is_trash")
+  
+  createdAt       DateTime     @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt       DateTime     @updatedAt @map("updated_at") @db.Timestamptz
+
+  user            User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  game            Game         @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  
+  @@map("analysis_sessions")
 }

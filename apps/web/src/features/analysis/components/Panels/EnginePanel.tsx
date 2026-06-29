@@ -1,11 +1,9 @@
 import React from 'react';
 import { useAnalysisStore } from '../../store/analysisStore';
-import { Panel } from '../../../../components/ui/Panel';
 import { Settings2, Cpu } from 'lucide-react';
-import './EnginePanel.css';
 
 export function EnginePanel() {
-  const { depth, nodes, nps, currentPv, status } = useAnalysisStore();
+  const { depth, nodes, nps, currentPv, status, evaluations, currentPly } = useAnalysisStore();
 
   const isAnalyzing = status === 'running';
 
@@ -15,42 +13,69 @@ export function EnginePanel() {
     return n.toString();
   };
 
+  const currentEval = evaluations[currentPly];
+  
+  // Format score based on centipawns vs mate
+  let evalScoreStr = '';
+  if (currentEval) {
+    if (currentEval.evaluation.type === 'mate') {
+      evalScoreStr = `M${Math.abs(currentEval.evaluation.value)}`;
+    } else {
+      const cp = currentEval.evaluation.value / 100;
+      evalScoreStr = cp > 0 ? `+${cp.toFixed(2)}` : cp.toFixed(2);
+    }
+  }
+
   return (
-    <Panel padding="md" style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', height: '100%', minHeight: '150px' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.5rem' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 600 }}>
-          <Cpu size={18} color={isAnalyzing ? 'var(--accent-primary)' : 'var(--text-secondary)'} />
+    <div className="flex flex-col h-full overflow-hidden rounded-xl border border-gray-800 bg-gray-900/50 shadow-sm">
+      <div className="flex items-center justify-between border-b border-gray-800 bg-gray-900/80 px-4 py-3">
+        <div className="flex items-center gap-2 font-semibold text-gray-200 text-sm">
+          <Cpu size={16} className={isAnalyzing ? 'text-blue-500 animate-pulse' : 'text-gray-500'} />
           <span>Stockfish 16.1</span>
         </div>
-        <button style={{ background: 'transparent', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer' }}>
-          <Settings2 size={16} />
-        </button>
+        <div className="flex items-center gap-3">
+          {evalScoreStr && (
+            <span className="font-mono text-sm font-bold text-gray-200 bg-gray-800 px-2 py-0.5 rounded">
+              {evalScoreStr}
+            </span>
+          )}
+          <button className="text-gray-500 hover:text-white transition-colors">
+            <Settings2 size={16} />
+          </button>
+        </div>
       </div>
 
-      <div className="engine-metrics">
-        <div><span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>Depth:</span> <span className="engine-metric-value">{depth}</span></div>
-        <div><span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>Nodes:</span> <span className="engine-metric-value">{formatNodes(nodes)}</span></div>
-        <div><span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>NPS:</span> <span className="engine-metric-value">{formatNodes(nps)}</span></div>
+      <div className="flex items-center justify-between px-4 py-2 text-xs font-mono text-gray-400 bg-gray-950">
+        <div><span className="text-gray-500">depth</span> {depth}</div>
+        <div><span className="text-gray-500">nodes</span> {formatNodes(nodes)}</div>
+        <div><span className="text-gray-500">nps</span> {formatNodes(nps)}</div>
       </div>
 
-      <div style={{ flex: 1, overflowY: 'auto', fontSize: '0.875rem', fontFamily: 'monospace', lineHeight: 1.6, paddingRight: '0.5rem' }}>
+      <div className="flex-1 overflow-y-auto p-4 text-sm font-mono text-gray-300">
         {status === 'queued' ? (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-            <div className="pulse-skeleton" style={{ width: '80%' }}></div>
-            <div className="pulse-skeleton" style={{ width: '60%' }}></div>
+          <div className="flex flex-col gap-2">
+            <div className="h-4 w-3/4 animate-pulse rounded bg-gray-800"></div>
+            <div className="h-4 w-1/2 animate-pulse rounded bg-gray-800"></div>
           </div>
         ) : currentPv.length > 0 ? (
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+          <div className="flex flex-wrap gap-1.5 leading-relaxed">
             {currentPv.map((move, i) => (
-              <span key={i} style={{ color: i === 0 ? 'var(--accent-primary)' : 'var(--text-primary)', fontWeight: i === 0 ? 600 : 400 }}>
+              <span 
+                key={i} 
+                className={`${
+                  i === 0 
+                    ? 'font-bold text-blue-400 bg-blue-900/20 px-1 rounded' 
+                    : 'text-gray-400'
+                }`}
+              >
                 {move}
               </span>
             ))}
           </div>
         ) : (
-          <span style={{ color: 'var(--text-secondary)' }}>Awaiting engine data...</span>
+          <span className="text-gray-600">Awaiting engine data...</span>
         )}
       </div>
-    </Panel>
+    </div>
   );
 }
