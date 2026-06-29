@@ -8,3 +8,7 @@ coverage
 .env.local
 .DS_Store
 packages/engine/bin
+
+# TypeScript Build Caches
+*.tsbuildinfo
+
