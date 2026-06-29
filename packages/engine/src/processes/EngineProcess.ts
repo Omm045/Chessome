@@ -1,4 +1,4 @@
-import { IEngineProcess } from './index';
+import { IEngineProcess } from './IEngineProcess';
 import { IUCITransport, NodeProcessTransport } from '../transports';
 
 export class EngineProcess implements IEngineProcess {

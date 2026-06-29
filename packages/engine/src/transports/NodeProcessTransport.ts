@@ -1,5 +1,5 @@
 import { ChildProcess, spawn } from 'child_process';
-import { IUCITransport } from './index';
+import { IUCITransport } from './IUCITransport';
 import * as readline from 'readline';
 
 export class NodeProcessTransport implements IUCITransport {
