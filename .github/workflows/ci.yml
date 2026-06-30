@@ -43,13 +43,13 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Generate Prisma Client
-        run: pnpm --filter @chessome/database generate
+        run: pnpm --filter @chessome/database db:generate
 
       - name: Lint
-        run: pnpm -r lint || echo "Linting failed but continuing for build test"
+        run: pnpm lint || echo "Linting failed but continuing for build test"
 
       - name: Typecheck
-        run: pnpm -r typecheck || echo "Typecheck failed but continuing for build test"
+        run: pnpm typecheck || echo "Typecheck failed but continuing for build test"
 
       - name: Build Next.js Web App
         run: pnpm --filter web build
