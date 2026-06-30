@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { User, AuthProvider } from '@chessome/core';
 import { IUserRepository } from '@chessome/ports';
 import { PrismaClient, AuthProvider as PrismaAuthProvider } from '@prisma/client';

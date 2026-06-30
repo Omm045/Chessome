@@ -1,6 +1,6 @@
 import { Controller, Get, Inject } from '@nestjs/common';
 import { HealthCheckService, HealthCheck, MemoryHealthIndicator } from '@nestjs/terminus';
-import { PrismaService } from '@chessome/database';
+import { PrismaClient } from '@prisma/client';
 import { Redis } from 'ioredis';
 import * as fs from 'fs';
 
@@ -11,7 +11,7 @@ export class HealthController {
   constructor(
     private health: HealthCheckService,
     private memory: MemoryHealthIndicator,
-    private prisma: PrismaService,
+    private prisma: PrismaClient,
   ) {}
 
   @Get()
@@ -24,7 +24,7 @@ export class HealthController {
         try {
           await this.prisma.$queryRaw`SELECT 1`;
           return { database: { status: 'up' } };
-        } catch (e) {
+        } catch (e: any) {
           return { database: { status: 'down', message: e.message } };
         }
       },
@@ -38,7 +38,7 @@ export class HealthController {
             return { redis: { status: 'up' } };
           }
           return { redis: { status: 'up', message: 'No REDIS_URL configured' } };
-        } catch (e) {
+        } catch (e: any) {
           return { redis: { status: 'down', message: e.message } };
         }
       },

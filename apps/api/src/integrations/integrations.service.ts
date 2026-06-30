@@ -44,7 +44,7 @@ export class IntegrationsService {
       }
 
       const gamesData = await gamesRes.json();
-      let games: any[] = gamesData.games || [];
+      const games: any[] = gamesData.games || [];
 
       // If we don't have enough games and there are previous archives, we could fetch them,
       // but for this MVP, returning the games from the current month is usually enough.
@@ -72,6 +72,8 @@ export class IntegrationsService {
       if (error instanceof HttpException) throw error;
       throw new HttpException('Internal Server Error', HttpStatus.INTERNAL_SERVER_ERROR);
     }
+  }
+
   async fetchLichessGames(username: string, limit: number = 20): Promise<ExternalGame[]> {
     try {
       const res = await fetch(`https://lichess.org/api/games/user/${username}?max=${limit}&pgnInJson=true`, {

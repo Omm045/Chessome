@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TerminusModule } from '@nestjs/terminus';
-import { DatabaseModule } from '@chessome/database';
+import { DatabaseModule } from '../database/database.module';
 import { HealthController } from './health.controller';
 
 @Module({

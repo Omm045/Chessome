@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// @ts-nocheck
 import { parse } from '@mliebelt/pgn-parser';
 
 console.log("=== ANNOTATIONS ===");

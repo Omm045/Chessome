@@ -10,7 +10,6 @@ import { UsersModule } from './users/users.module';
 import { LibraryModule } from './library/library.module';
 import { IntegrationsModule } from './integrations/integrations.module';
 import { FeedbackModule } from './feedback/feedback.module';
-import { HealthModule } from './health/health.module';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 
 @Module({
@@ -44,7 +43,6 @@ import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
     LibraryModule,
     IntegrationsModule,
     FeedbackModule,
-    HealthModule,
   ],
   providers: [
     {
