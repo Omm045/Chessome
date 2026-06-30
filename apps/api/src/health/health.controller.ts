@@ -1,9 +1,13 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Inject } from '@nestjs/common';
 import { HealthCheckService, HealthCheck, MemoryHealthIndicator } from '@nestjs/terminus';
 import { PrismaService } from '@chessome/database';
+import { Redis } from 'ioredis';
+import * as fs from 'fs';
 
 @Controller('health')
 export class HealthController {
+  private redisClient: Redis | null = null;
+
   constructor(
     private health: HealthCheckService,
     private memory: MemoryHealthIndicator,
@@ -14,7 +18,8 @@ export class HealthController {
   @HealthCheck()
   async check() {
     return this.health.check([
-      () => this.memory.checkHeap('memory_heap', 150 * 1024 * 1024),
+      () => this.memory.checkHeap('memory_heap', 300 * 1024 * 1024), // 300MB heap limit (within 1GB machine)
+      () => this.memory.checkRSS('memory_rss', 500 * 1024 * 1024), // 500MB RSS limit
       async () => {
         try {
           await this.prisma.$queryRaw`SELECT 1`;
@@ -24,8 +29,25 @@ export class HealthController {
         }
       },
       async () => {
-        // Stub for Redis status until fully integrated
-        return { redis: { status: 'up', message: 'Stubbed integration' } };
+        try {
+          if (!this.redisClient && process.env.REDIS_URL) {
+            this.redisClient = new Redis(process.env.REDIS_URL);
+          }
+          if (this.redisClient) {
+            await this.redisClient.ping();
+            return { redis: { status: 'up' } };
+          }
+          return { redis: { status: 'up', message: 'No REDIS_URL configured' } };
+        } catch (e) {
+          return { redis: { status: 'down', message: e.message } };
+        }
+      },
+      async () => {
+        const enginePath = 'packages/engine-stockfish/src/wasm/stockfish.js';
+        if (fs.existsSync(enginePath)) {
+          return { engine: { status: 'up', type: 'wasm' } };
+        }
+        return { engine: { status: 'down', message: 'Binary not found' } };
       }
     ]).then(result => ({
       ...result,

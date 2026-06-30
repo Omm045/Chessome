@@ -31,9 +31,9 @@ graph TD
 - **Rationale**: Vercel provides world-class global edge routing, seamless Next.js optimization, and zero-config deployment.
 
 ### 2.2 Backend (NestJS + Engines)
-- **Host**: Persistent Node Runtime (e.g., Render, Railway, Fly.io, or AWS Fargate)
+- **Host**: Fly.io (Free Tier)
 - **Strategy**: Long-lived Node.js processes wrapping native C++ Stockfish binaries.
-- **Rationale**: **Do NOT deploy the backend to Vercel Serverless.** Serverless environments aggressively kill processes and heavily restrict execution time. Chess analysis requires persistent WebSocket/SSE connections and heavy, long-running CPU calculations via native binaries.
+- **Rationale**: **Do NOT deploy the backend to Vercel Serverless.** Serverless environments aggressively kill processes and heavily restrict execution time. Chess analysis requires persistent WebSocket/SSE connections and heavy, long-running CPU calculations via native binaries. Fly.io provides persistent container runtimes ideally suited for long-lived processes.
 
 ### 2.3 Database (PostgreSQL)
 - **Host**: Supabase
@@ -80,5 +80,5 @@ FRONTEND_URL="https://chessome.com"
 
 ## 5. Backup & Security
 - **Backups**: Supabase provides automated daily backups and Point-in-Time Recovery (PITR) for the PostgreSQL database.
-- **Secrets Management**: No secrets are committed to the repository. In production, Vercel Environment Variables and Render/Railway Secret Vaults inject environment configuration securely.
+- **Secrets Management**: No secrets are committed to the repository. In production, Vercel Environment Variables and Fly.io Secrets inject environment configuration securely.
 - **DDoS Protection**: Vercel's edge network automatically mitigates L3/L4/L7 attacks against the frontend. The backend must be shielded behind a WAF or strict rate-limiting (via Upstash Redis).

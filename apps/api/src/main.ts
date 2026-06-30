@@ -6,8 +6,19 @@ import { GlobalExceptionFilter } from './common/filters/global-exception.filter'
 import { RequestIdMiddleware } from './common/middleware/request-id.middleware';
 import { ValidationPipe } from '@nestjs/common';
 import helmet from 'helmet';
+import * as Sentry from '@sentry/nestjs';
+import { nodeProfilingIntegration } from '@sentry/profiling-node';
 
 async function bootstrap() {
+  Sentry.init({
+    dsn: process.env.SENTRY_DSN,
+    integrations: [
+      nodeProfilingIntegration(),
+    ],
+    tracesSampleRate: 1.0, 
+    profilesSampleRate: 1.0,
+  });
+
   const app = await NestFactory.create(AppModule, { bufferLogs: true });
 
   // Structured Logging

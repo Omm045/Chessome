@@ -12,6 +12,9 @@ fi
 
 fly deploy --ha=false
 
+# WARNING: We use `db push` exclusively for the initial Alpha deployment on an empty database.
+# For all future production deployments, change the line below to:
+# fly ssh console -C "npx prisma migrate deploy"
 echo "Deployment complete. Running Prisma schema push within the VM..."
 fly ssh console -C "npx prisma db push --schema packages/database/prisma/schema.prisma"
 
