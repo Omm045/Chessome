@@ -17,8 +17,8 @@ RUN pnpm install --frozen-lockfile
 # Generate Prisma Client
 RUN pnpm --filter @chessome/database db:generate
 
-# Build the API
-RUN pnpm --filter @chessome/api build
+# Build the API via Turbo (builds all internal workspace dependencies like @chessome/shared first)
+RUN npx turbo run build --filter=@chessome/api
 
 # Runner stage
 FROM base AS runner
