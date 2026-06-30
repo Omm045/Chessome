@@ -8,29 +8,17 @@ RUN corepack enable
 FROM base AS builder
 WORKDIR /app
 
-# Copy package configurations
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
-COPY apps/api/package.json ./apps/api/
-COPY packages/core/package.json ./packages/core/
-COPY packages/types/package.json ./packages/types/
-COPY packages/database/package.json ./packages/database/
-COPY packages/ports/package.json ./packages/ports/
-COPY packages/application/package.json ./packages/application/
+# Copy all source code (this ensures all workspace package.jsons are present for pnpm install)
+COPY . .
 
 # Install dependencies
 RUN pnpm install --frozen-lockfile
 
-# Copy source code
-COPY . .
-
 # Generate Prisma Client
-RUN pnpm --filter database run build || true
-WORKDIR /app/packages/database
-RUN npx prisma generate
-WORKDIR /app
+RUN pnpm --filter @chessome/database db:generate
 
 # Build the API
-RUN pnpm --filter api run build
+RUN pnpm --filter @chessome/api build
 
 # Runner stage
 FROM base AS runner
